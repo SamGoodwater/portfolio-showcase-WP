@@ -1,0 +1,56 @@
+Voici un résumé de la structure et des fonctionnalités de mon extension WordPress "Portfolio Showcase".
+
+## Structure de l'extension
+
+L'extension est organisée en trois dossiers principaux :
+
+1. **Dossier racine** : Contient le fichier principal `portfolio-showcase.php` qui initialise l'extension et définit les constantes.
+
+2. **Dossier `includes`** : Contient les classes PHP principales :
+   - `class-portfolio-showcase.php` : Classe principale qui gère l'affichage du carousel et de la palette de couleurs
+   - `class-portfolio-post-type.php` : Définit le type de publication personnalisé pour les projets de portfolio
+   - `class-portfolio-metaboxes.php` : Gère les champs personnalisés pour les projets de portfolio
+
+3. **Dossier `assets`** : Contient les ressources front-end :
+   - `js/portfolio-showcase.js` : JavaScript pour le carousel et les interactions
+   - `css/portfolio-showcase.css` : Styles CSS pour le carousel et la palette de couleurs
+
+## Fonctionnalités principales
+
+### 1. Type de publication personnalisé
+- Création d'un type de publication "Portfolio" pour gérer les projets
+- Champs personnalisés pour les images, descriptions, titres et positions
+
+### 2. Carousel d'images avancé
+- **Navigation infinie** : Défilement circulaire entre les images
+- **Prévisualisations** : Affichage des images précédentes/suivantes avec effet de dégradé
+- **Mode plein écran** : Possibilité d'afficher les images en plein écran
+- **Navigation par miniatures** : Miniatures centrées pour accéder rapidement aux images
+- **Navigation au clavier** : Utilisation des flèches et de la touche Échap
+- **Positions de texte personnalisables** : Titres et descriptions positionnables selon les préférences
+
+### 3. Palette de couleurs interactive
+- Affichage des couleurs sous forme de rectangles
+- Commentaires optionnels pour chaque couleur
+- Position des commentaires personnalisable (haut/bas)
+- Hauteur des rectangles ajustable
+
+### 4. Personnalisation avancée
+- Options de style configurables (padding, marges)
+- Support CSS personnalisé
+- Design responsive adapté aux différentes tailles d'écran
+
+### 5. Intégration WordPress
+- Utilisation de shortcodes pour afficher les projets : `[portfolio_showcase id="project_id"]`
+- Intégration dans l'interface d'administration WordPress
+- Compatible avec WordPress 6.7.2+ et PHP 7.4+
+
+## Fonctionnement technique
+
+1. **Backend** : Les classes PHP gèrent l'enregistrement du type de publication, les métadonnées et le rendu HTML.
+
+2. **Frontend** : Le JavaScript gère les interactions utilisateur (navigation, plein écran) tandis que le CSS assure le style et l'apparence visuelle.
+
+3. **Architecture modulaire** : Séparation claire entre la logique métier (PHP), l'interface utilisateur (HTML) et le comportement (JavaScript).
+
+Cette extension offre une solution complète pour créer et afficher des portfolios professionnels dans WordPress, avec une attention particulière portée à l'expérience utilisateur et à la personnalisation.

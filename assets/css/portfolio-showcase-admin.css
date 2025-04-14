@@ -1,0 +1,340 @@
+/* Portfolio Showcase Admin Styles */
+
+/* Common */
+.portfolio-showcase-admin {
+    margin: 15px 0;
+}
+
+/* Carousel Images */
+.portfolio-carousel-container {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 15px 0;
+}
+
+.carousel-images {
+    margin-bottom: 20px;
+}
+
+#carousel-image-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.carousel-image-item {
+    position: relative;
+    width: 150px;
+    margin-bottom: 10px;
+}
+
+.carousel-image-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #ddd;
+}
+
+.carousel-image-item .remove-image {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.carousel-image-item .image-details {
+    margin-top: 5px;
+}
+
+.carousel-image-item .image-details input[type="text"] {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.carousel-image-item .image-details textarea {
+    width: 100%;
+    height: 60px;
+    resize: vertical;
+}
+
+.carousel-image-preview {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.carousel-image-preview img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.carousel-image-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 5px;
+}
+
+.carousel-image-actions button {
+    padding: 5px;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.carousel-image-actions button:hover {
+    background: #fff;
+}
+
+.carousel-image-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.carousel-image-fields input,
+.carousel-image-fields textarea {
+    width: 100%;
+}
+
+.carousel-settings {
+    background: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+
+.carousel-settings p {
+    margin-bottom: 10px;
+}
+
+/* Color Palette */
+.portfolio-color-palette-container {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 15px 0;
+}
+
+.color-list {
+    margin-bottom: 20px;
+}
+
+#color-palette-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.color-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.color-item input[type="color"] {
+    width: 50px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid #ddd;
+}
+
+.color-item input[type="text"] {
+    width: 200px;
+}
+
+.color-item .remove-color {
+    background: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.palette-settings {
+    background: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+
+.palette-settings p {
+    margin-bottom: 10px;
+}
+
+/* Style Options */
+.portfolio-style-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.portfolio-style-options p {
+    margin-bottom: 15px;
+}
+
+.portfolio-style-options label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.portfolio-style-options input[type="text"],
+.portfolio-style-options textarea {
+    width: 100%;
+}
+
+.portfolio-style-options textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Buttons */
+.add-item-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 16px;
+    background: #2271b1;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.add-item-button:hover {
+    background: #135e96;
+}
+
+.add-item-button:focus {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px #2271b1;
+    outline: none;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 782px) {
+    .carousel-settings {
+        grid-template-columns: 1fr;
+    }
+
+    #carousel-image-list,
+    #color-palette-list {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+.remove-image,
+.remove-color {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.remove-image:hover,
+.remove-color:hover {
+    background: #c82333;
+}
+
+#add-carousel-images,
+#add-color {
+    margin-top: 10px;
+}
+
+/* Content Blocks Styles */
+.content-block-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.block-header h4 {
+    margin: 0;
+    color: #23282d;
+}
+
+.block-content p {
+    margin: 10px 0;
+}
+
+.block-content label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.block-content input[type="text"],
+.block-content textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.block-content input[type="color"] {
+    width: 50px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.block-content input[type="color"][data-alpha="true"] {
+    background: linear-gradient(45deg, #ccc 25%, transparent 25%),
+                linear-gradient(-45deg, #ccc 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #ccc 75%),
+                linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 10px 10px;
+    background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
+}
+
+.remove-block {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.remove-block:hover {
+    background: #c82333;
+}
+
+#add-content-block {
+    margin-top: 10px;
+} 
