@@ -2,7 +2,7 @@ Voici un résumé de la structure et des fonctionnalités de mon extension WordP
 
 ## Structure de l'extension
 
-L'extension est organisée en trois dossiers principaux :
+L'extension est organisée en plusieurs dossiers principaux :
 
 1. **Dossier racine** : Contient le fichier principal `portfolio-showcase.php` qui initialise l'extension et définit les constantes.
 
@@ -10,16 +10,25 @@ L'extension est organisée en trois dossiers principaux :
    - `class-portfolio-showcase.php` : Classe principale qui gère l'affichage du carousel et de la palette de couleurs
    - `class-portfolio-post-type.php` : Définit le type de publication personnalisé pour les projets de portfolio
    - `class-portfolio-metaboxes.php` : Gère les champs personnalisés pour les projets de portfolio
+   - `class-portfolio-settings.php` : Gère les paramètres globaux de l'extension
 
 3. **Dossier `assets`** : Contient les ressources front-end :
    - `js/portfolio-showcase.js` : JavaScript pour le carousel et les interactions
+   - `js/portfolio-showcase-admin.js` : JavaScript pour l'interface d'administration
    - `css/portfolio-showcase.css` : Styles CSS pour le carousel et la palette de couleurs
+   - `css/portfolio-showcase-admin.css` : Styles CSS pour l'interface d'administration
+
+4. **Dossier `languages`** : Contient les fichiers de traduction :
+   - `portfolio-showcase.pot` : Fichier modèle pour les traductions
+   - `portfolio-showcase-fr_FR.po` : Traduction française
+   - `README.md` : Documentation sur les traductions
 
 ## Fonctionnalités principales
 
 ### 1. Type de publication personnalisé
-- Création d'un type de publication "Portfolio" pour gérer les projets
-- Champs personnalisés pour les images, descriptions, titres et positions
+- Création d'un type de publication "Portfolio Project" pour gérer les projets
+- Support pour les titres, éditeur de contenu et images à la une
+- Interface d'administration dédiée avec icône personnalisée
 
 ### 2. Carousel d'images avancé
 - **Navigation infinie** : Défilement circulaire entre les images
@@ -27,7 +36,7 @@ L'extension est organisée en trois dossiers principaux :
 - **Mode plein écran** : Possibilité d'afficher les images en plein écran
 - **Navigation par miniatures** : Miniatures centrées pour accéder rapidement aux images
 - **Navigation au clavier** : Utilisation des flèches et de la touche Échap
-- **Positions de texte personnalisables** : Titres et descriptions positionnables selon les préférences
+- **Positions de texte personnalisables** : Titres et descriptions positionnables selon les préférences (haut-gauche, haut-droite, bas-gauche, bas-droite, centre)
 
 ### 3. Palette de couleurs interactive
 - Affichage des couleurs sous forme de rectangles
@@ -36,21 +45,31 @@ L'extension est organisée en trois dossiers principaux :
 - Hauteur des rectangles ajustable
 
 ### 4. Personnalisation avancée
-- Options de style configurables (padding, marges)
-- Support CSS personnalisé
-- Design responsive adapté aux différentes tailles d'écran
+- **Paramètres globaux** : Configuration des couleurs, positions et comportements par défaut
+- **Paramètres par projet** : Possibilité de surcharger les paramètres globaux pour chaque projet
+- **Options de style configurables** : Couleurs, opacité, positions, etc.
+- **Design responsive** : Adapté aux différentes tailles d'écran (mobile, tablette, desktop)
 
 ### 5. Intégration WordPress
 - Utilisation de shortcodes pour afficher les projets : `[portfolio_showcase id="project_id"]`
 - Intégration dans l'interface d'administration WordPress
-- Compatible avec WordPress 6.7.2+ et PHP 7.4+
+- Compatible avec WordPress 6.0+ et PHP 7.4+
+- Support multilingue avec fichiers de traduction
 
 ## Fonctionnement technique
 
-1. **Backend** : Les classes PHP gèrent l'enregistrement du type de publication, les métadonnées et le rendu HTML.
+1. **Backend** : 
+   - Les classes PHP gèrent l'enregistrement du type de publication, les métadonnées et le rendu HTML
+   - Utilisation des hooks WordPress pour l'intégration
+   - Système de paramètres hiérarchique (globaux > par projet)
 
-2. **Frontend** : Le JavaScript gère les interactions utilisateur (navigation, plein écran) tandis que le CSS assure le style et l'apparence visuelle.
+2. **Frontend** : 
+   - Le JavaScript gère les interactions utilisateur (navigation, plein écran) 
+   - Le CSS assure le style et l'apparence visuelle
+   - Utilisation de classes ES6 pour une meilleure organisation du code
 
-3. **Architecture modulaire** : Séparation claire entre la logique métier (PHP), l'interface utilisateur (HTML) et le comportement (JavaScript).
+3. **Architecture modulaire** : 
+   - Séparation claire entre la logique métier (PHP), l'interface utilisateur (HTML) et le comportement (JavaScript)
+   - Utilisation de classes pour une meilleure encapsulation et réutilisabilité
 
 Cette extension offre une solution complète pour créer et afficher des portfolios professionnels dans WordPress, avec une attention particulière portée à l'expérience utilisateur et à la personnalisation.

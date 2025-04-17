@@ -15,6 +15,10 @@ class Portfolio_Showcase {
         // Initialize Metaboxes
         $metaboxes = new Portfolio_Metaboxes();
         $metaboxes->init();
+        
+        // Initialize Settings
+        $settings = new Portfolio_Settings();
+        $settings->init();
     }
 
     public function run() {
@@ -44,10 +48,19 @@ class Portfolio_Showcase {
             true
         );
 
+        // Get global settings
+        $settings_manager = new Portfolio_Settings();
+        $global_carousel_settings = $settings_manager->get_carousel_settings();
+        $global_palette_settings = $settings_manager->get_palette_settings();
+
         // Localize script
         wp_localize_script('portfolio-showcase', 'portfolioShowcaseSettings', array(
             'ajaxurl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('portfolio_showcase_nonce')
+            'nonce' => wp_create_nonce('portfolio_showcase_nonce'),
+            'defaultSettings' => array(
+                'carousel' => $global_carousel_settings,
+                'palette' => $global_palette_settings
+            )
         ));
     }
 
@@ -92,21 +105,12 @@ class Portfolio_Showcase {
         $carousel_settings = get_post_meta($project->ID, '_portfolio_carousel_settings', true);
         $color_palette = get_post_meta($project->ID, '_portfolio_color_palette', true);
         $palette_settings = get_post_meta($project->ID, '_portfolio_palette_settings', true);
-        $style_options = get_post_meta($project->ID, '_portfolio_style_options', true);
 
         // Start output buffering
         ob_start();
 
-        // Project container with custom styles
-        $custom_style = '';
-        if (!empty($style_options['padding'])) {
-            $custom_style .= "padding: {$style_options['padding']};";
-        }
-        if (!empty($style_options['margin'])) {
-            $custom_style .= "margin: {$style_options['margin']};";
-        }
-        
-        echo '<div class="portfolio-showcase" style="' . esc_attr($custom_style) . '">';
+        // Project container
+        echo '<div class="portfolio-showcase">';
 
         // Project title
         if (!empty($project->post_title)) {
@@ -125,12 +129,7 @@ class Portfolio_Showcase {
 
         // Render color palette if colors exist
         if (!empty($color_palette)) {
-            $this->render_color_palette($color_palette, $palette_settings);
-        }
-
-        // Add custom CSS if any
-        if (!empty($style_options['custom_css'])) {
-            echo '<style type="text/css">' . esc_html($style_options['custom_css']) . '</style>';
+            $this->render_color_palette($project->ID);
         }
 
         echo '</div>';
@@ -140,14 +139,26 @@ class Portfolio_Showcase {
     }
 
     private function render_carousel($images, $settings) {
+        // Get global settings
+        $settings_manager = new Portfolio_Settings();
+        $global_settings = $settings_manager->get_carousel_settings();
+        
         // Default settings
-        $settings = wp_parse_args($settings, array(
-            'enable_fullscreen' => true,
-            'description_position' => 'bottom',
-            'title_position' => 'top-left',
-            'background_color' => '#000000'
-        ));
-
+        $default_settings = array(
+            'local-carousel-enable-fullscreen' => $global_settings['local-carousel-enable-fullscreen'],
+            'local-carousel-position-description' => $global_settings['local-carousel-position-description'],
+            'local-carousel-position-title' => $global_settings['local-carousel-position-title'],
+            'local-carousel-color-background-fullscreen' => $global_settings['local-carousel-color-background-fullscreen'],
+            'local-carousel-color-background' => $global_settings['local-carousel-color-background'],
+            'local-carousel-color-title' => $global_settings['local-carousel-color-title'],
+            'local-carousel-color-description' => $global_settings['local-carousel-color-description'],
+            'local-carousel-opacity-background-fullscreen' => $global_settings['local-carousel-opacity-background-fullscreen'],
+            'local-carousel-color-description-fullscreen' => $global_settings['local-carousel-color-description-fullscreen'],
+            'local-carousel-color-title-fullscreen' => $global_settings['local-carousel-color-title-fullscreen']
+        );
+        
+        $settings = wp_parse_args($settings, $default_settings);
+        
         // Find main image
         $main_image = null;
         foreach ($images as $image) {
@@ -163,12 +174,11 @@ class Portfolio_Showcase {
         }
 
         // Start carousel container
-        echo '<div class="portfolio-carousel" data-enable-fullscreen="' . 
-             esc_attr($settings['enable_fullscreen']) . '" data-background="' . 
-             esc_attr($settings['background_color']) . '">';
-
-        // Carousel container
+        echo '<div class="portfolio-carousel" data-settings=\'' . esc_attr(json_encode($settings)) . '\'>';
         echo '<div class="carousel-container">';
+        
+        // Définir la position de la description en dehors de la boucle
+        $description_position = isset($settings['local-carousel-position-description']) ? $settings['local-carousel-position-description'] : 'bottom';
         
         // Render slides
         foreach ($images as $index => $image) {
@@ -177,55 +187,94 @@ class Portfolio_Showcase {
 
             $is_active = ($image === $main_image) ? ' active' : '';
             echo '<div class="carousel-slide' . $is_active . '" data-index="' . esc_attr($index) . '">';
+
+            // Placer la description en haut si la position est "top"
+            if (!empty($image['description']) && $description_position === 'top') {
+                echo '<div class="carousel-slide-description top" data-description-index="' . esc_attr($index) . '" data-description-position="' . esc_attr($description_position) . '">' . wp_kses_post($image['description']) . '</div>';
+            }
+            
+            // Créer un conteneur pour l'image et le titre
+            echo '<div class="carousel-image-container">';
+            
+            // Déterminer si le titre doit être placé avant ou après l'image
+            $title_position = isset($settings['local-carousel-position-title']) ? $settings['local-carousel-position-title'] : 'top-left';
+            $is_top_position = strpos($title_position, 'top') === 0;
+            
+            // Placer le titre avant l'image si la position est "top"
+            if ($is_top_position && !empty($image['title'])) {
+                echo '<div class="carousel-title-container ' . esc_attr($title_position) . '">';
+                echo '<h3 class="carousel-title">' . esc_html($image['title']) . '</h3>';
+                echo '</div>';
+            }
+            
+            // Image
             echo '<img src="' . esc_url($img_src[0]) . '" alt="' . esc_attr($image['title']) . '">';
             
-            if (!empty($image['title']) || !empty($image['description'])) {
-                echo '<div class="carousel-text">';
-                if (!empty($image['title'])) {
-                    echo '<h3 class="carousel-title ' . esc_attr($settings['title_position']) . '">' . 
-                         esc_html($image['title']) . '</h3>';
-                }
-                if (!empty($image['description'])) {
-                    echo '<div class="carousel-description ' . esc_attr($settings['description_position']) . '">' . 
-                         wp_kses_post($image['description']) . '</div>';
-                }
+            // Placer le titre après l'image si la position est "bottom"
+            if (!$is_top_position && !empty($image['title'])) {
+                echo '<div class="carousel-title-container ' . esc_attr($title_position) . '">';
+                echo '<h3 class="carousel-title">' . esc_html($image['title']) . '</h3>';
                 echo '</div>';
+            }
+            
+            // Fermer le conteneur d'image
+            echo '</div>';
+
+            // Placer la description en bas si la position est "bottom"
+            if (!empty($image['description']) && $description_position === 'bottom') {
+                echo '<div class="carousel-slide-description bottom" data-description-index="' . esc_attr($index) . '" data-description-position="' . esc_attr($description_position) . '">' . wp_kses_post($image['description']) . '</div>';
             }
             
             echo '</div>';
         }
         
         echo '</div>'; // End carousel-container
-
-        // Navigation buttons are now added by JavaScript
+        
+        // Navigation buttons
         
         // Thumbnails are now added by JavaScript
 
         echo '</div>'; // End portfolio-carousel
     }
 
-    private function render_color_palette($colors, $settings) {
+    private function render_color_palette($post_id) {
+        $colors = get_post_meta($post_id, '_portfolio_color_palette', true);
+        $palette_settings = get_post_meta($post_id, '_portfolio_palette_settings', true);
+        
+        if (empty($colors) || !is_array($colors)) {
+            return;
+        }
+        
+        // Get global settings
+        $settings_manager = new Portfolio_Settings();
+        $global_settings = $settings_manager->get_palette_settings();
+        
         // Default settings
-        $settings = wp_parse_args($settings, array(
-            'height' => 20,
-            'comment_position' => 'bottom'
-        ));
+        $default_settings = array(
+            'local-palette-height-rectangle' => $global_settings['local-palette-height-rectangle'],
+            'local-palette-position-comment' => $global_settings['local-palette-position-comment'],
+            'local-palette-color-comment' => $global_settings['local-palette-color-comment']
+        );
+        
+        // Merge with local settings
+        $settings = wp_parse_args($palette_settings, $default_settings);
 
-        echo '<div class="portfolio-color-palette">';
+        $comment_position = $settings['local-palette-position-comment'];
+        $rectangle_height = $settings['local-palette-height-rectangle'];
+        
+        // Start color palette container
+        echo '<div class="portfolio-color-palette" data-settings=\'' . esc_attr(json_encode($settings)) . '\'>';
         
         foreach ($colors as $color) {
-            $style = 'height: ' . esc_attr($settings['height']) . 'px; background-color: ' . 
-                    esc_attr($color['color']) . ';';
-            
-            echo '<div class="color-rectangle" data-color="' . esc_attr($color['color']) . 
-                 '" style="' . $style . '">';
-            
-            if (!empty($color['comment'])) {
-                echo '<div class="color-comment ' . esc_attr($settings['comment_position']) . '">' . 
-                     esc_html($color['comment']) . '</div>';
+            if (isset($color['color'])) {
+                echo '<div class="color-item">';
+                echo '<div title="' . esc_attr(htmlspecialchars($color['color'])) . '" class="color-rectangle" style="background-color: ' . esc_attr($color['color']) . '; height: ' . esc_attr($rectangle_height) . 'px;"></div>';
+                if (!empty($color['comment'])) {
+                    echo '<div title="' . esc_attr(htmlspecialchars($color['comment'])) . '" class="color-comment ' . esc_attr($comment_position) . '">' . esc_html($color['comment']) . '</div>';
+                }
+                echo '</div>';
+
             }
-            
-            echo '</div>';
         }
         
         echo '</div>';

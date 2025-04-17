@@ -1,6 +1,10 @@
-/* Portfolio Showcase Styles */
+/* ==========================================================================
+   Portfolio Showcase - Styles principaux
+   ========================================================================== */
 
-/* Container */
+/* ==========================================================================
+   Container principal
+   ========================================================================== */
 .portfolio-showcase {
     margin: 0;
     padding: 0;
@@ -8,58 +12,122 @@
     font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-/* Carousel */
+/* ==========================================================================
+   Carousel - Structure principale
+   ========================================================================== */
 .portfolio-carousel {
-    max-width: 1200px;
-    margin: 0 auto;
     position: relative;
+    width: 100%;
+    margin: 0 auto;
     background-color: #f5f5f5;
     border-radius: 8px;
     overflow: hidden;
+    box-shadow: 6px 6px 9px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
 }
 
 .carousel-container {
     position: relative;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
     overflow: hidden;
-    background-color: #000;
+    align-content: center;
 }
 
-.carousel-slide {
-    position: absolute;
+/* ==========================================================================
+   Carousel - Mode plein écran
+   ========================================================================== */
+.portfolio-carousel.fullscreen {
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    margin: 0;
     z-index: 1;
+    border-radius: 0;
+    cursor: pointer;
+    align-content: center;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.portfolio-carousel.fullscreen .carousel-container {
+    padding-top: 0;
+    height: 80%;
+    max-height: 80vh;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ==========================================================================
+   Carousel - Slides et images
+   ========================================================================== */
+.carousel-slide {
+    display: none;
+    position: relative;
+    width: 100%;
 }
 
 .carousel-slide.active {
-    opacity: 1;
-    z-index: 2;
+    display: block;
+}
+
+.portfolio-carousel.fullscreen .carousel-slide.active {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 90%;
+    z-index: 1;
+}
+
+/* Nouveau conteneur pour l'image et le titre */
+.carousel-image-container {
+    position: relative;
+    width: 100%;
+    height: auto;
 }
 
 .carousel-slide img {
     width: 100%;
-    height: 100%;
-    object-fit: contain;
-    max-height: 100%;
-    cursor: pointer;
+    height: auto;
+    display: block;
 }
 
-/* Preview Containers */
+/* Styles pour le conteneur de description */
+.carousel-slide-description {
+    position: relative;
+    padding: 1rem;
+    font-size: 1rem;
+    color: #2e3d38;
+}
+
+.portfolio-carousel.fullscreen .carousel-slide-description {
+    color: #f2f7f5;
+}
+
+/* ==========================================================================
+   Carousel - Prévisualisations (previous/next)
+   ========================================================================== */
 .carousel-preview-container {
     position: absolute;
     top: 0;
     height: 100%;
-    width: 80px;
+    width: 20%;
     align-items: center;
     cursor: pointer;
+}
+
+/* Remonter les prévisualisations lorsqu'une description est présente */
+.carousel-container:has(.carousel-slide.active .carousel-slide-description.bottom) .carousel-nav-arrow {
+    transform: translateY(-100%);
+}
+
+.carousel-container:has(.carousel-slide.active .carousel-slide-description.top) .carousel-nav-arrow {
+    transform: translateY(100%);
 }
 
 .carousel-preview-container.prev {
@@ -72,226 +140,172 @@
     cursor: w-resize;
 }
 
-/* Preview Images (previous/next) */
 .carousel-preview-image {
-    position: absolute;
-    width: 20%;
-    height: 70%;
-    background-size: cover;
-    background-position: center;
-    opacity: 0.7;
-    top: 50%;
-    transform: translateY(-50%);
-    filter: brightness(0.7);
-    transition: filter opacity width height 0.3s ease;
+    display: none;
 }
 
-.carousel-preview-image.prev {
-    background-position: right center;
-    mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-    transition: mask-image 0.3s ease;
-}
-
-.carousel-preview-image.next {
-    background-position: left center;
-    mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-    -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-    transition: mask-image 0.3s ease;
-}
-
-/* Preview Buttons (zones de clic) */
 .carousel-preview-button {
     position: absolute;
     top: 0;
     width: 100%;
     height: 100%;
     cursor: pointer;
-    z-index: 3;
+    z-index: 4;
 }
 
 .carousel-preview-container:hover .carousel-preview-image {
    filter: brightness(1);
    opacity: 1;
-   mask-image: none;
-   -webkit-mask-image: none;
-   width: 100%;
-   height: 100%;
 }
 
-.carousel-preview-container:hover .carousel-preview-image.prev {
-     animation: slideToLeftAndReturn 0.5s ease-in-out forwards;
-         background-position: right center;
-    mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-    -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-}
-
-.carousel-preview-container:hover .carousel-preview-image.next {
-    animation: slideToRightAndReturn 0.5s ease-in-out forwards;
-        background-position: left center;
-    mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-}
-
-/* Close Fullscreen Button */
-.close-fullscreen {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 10000;
-    transition: all 0.3s ease;
-    padding: 0;
-}
-
-.close-fullscreen:hover {
-    background: rgba(255, 255, 255, 0.95);
-    transform: rotate(90deg);
-}
-
-.close-fullscreen::before,
-.close-fullscreen::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 2px;
-    background: #333;
-}
-
-.close-fullscreen::before {
-    transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.close-fullscreen::after {
-    transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-/* Fullscreen Mode */
-.portfolio-carousel.fullscreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    max-width: none;
-    margin: 0;
-    z-index: 9999;
-    background-color: rgba(0, 0, 0, 0.95);
-    border-radius: 0;
-    cursor: pointer;
-    align-content: center;
-}
-
-.portfolio-carousel.fullscreen .carousel-container {
-    padding-top: 0;
-    height: 80%; /* Reduced to make room for thumbnails */
-    max-height: 80vh;
-}
-
-.portfolio-carousel.fullscreen .carousel-slide img {
-    object-fit: contain;
-    max-height: 90%;
-    max-width: 90%;
-}
-
+/* ==========================================================================
+   Carousel - Prévisualisations en mode plein écran
+   ========================================================================== */
 .portfolio-carousel.fullscreen .carousel-preview-container {
     width: 20%;
 }
 
 .portfolio-carousel.fullscreen .carousel-preview-image {
-    width: 100%;
-    height: 70%;
-}
-
-.portfolio-carousel.fullscreen .carousel-thumbnails {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 90%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
-
-.portfolio-carousel.fullscreen .carousel-thumbnails::-webkit-scrollbar {
-    display: none;
-}
-
-/* Text Positioning */
-.carousel-title {
+    display: block;
     position: absolute;
-    margin: 20px;
-    color: #fff;
+    width: 100%;
+    height: 50%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+    top: 50%;
+    transform: translateY(-50%);
+    filter: brightness(0.7);
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.portfolio-carousel.fullscreen .carousel-preview-image.prev {
+    background-position: right center;
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 20%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 20%, rgba(0, 0, 0, 0) 100%);
+    transition: transform 0.3s ease;
+}
+
+.portfolio-carousel.fullscreen .carousel-preview-image.next {
+    background-position: left center;
+    mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 20%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 20%, rgba(0, 0, 0, 0) 100%);
+    transition: transform 0.3s ease;
+}
+
+.portfolio-carousel.fullscreen .carousel-preview-container:hover .carousel-preview-image {
+    filter: brightness(1);
+    opacity: 1;
+    z-index: 1;
+}
+
+.portfolio-carousel.fullscreen .carousel-preview-container:hover .carousel-preview-image.prev {
+    transform: translateX(2%) translateY(-50%) scale(1.02);
+}
+
+.portfolio-carousel.fullscreen .carousel-preview-container:hover .carousel-preview-image.next {
+    transform: translateX(-2%) translateY(-50%) scale(1.02);
+}
+
+.portfolio-carousel.fullscreen .carousel-container:has(.carousel-preview-container.prev:hover) .carousel-slide.active {
+    transform: translateX(4%) scale(0.98);
+}
+
+.portfolio-carousel.fullscreen .carousel-container:has(.carousel-preview-container.next:hover) .carousel-slide.active {
+    transform: translateX(-4%) scale(0.98);
+}
+
+/* ==========================================================================
+   Carousel - Titre
+   ========================================================================== */
+.carousel-title-container {
+    position: absolute;
+    z-index: 5;
+    padding: 0;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Styles pour les titres */
+.carousel-title {
+    padding: 1rem 1rem;
+    margin: 0;
+    color: #f5f5f5;
     font-size: 24px;
     font-weight: bold;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    z-index: 5;
 }
 
-.carousel-title.top-left {
+/* Styles pour le mode plein écran */
+.portfolio-carousel.fullscreen .carousel-title-container {
+    position: relative;
+}
+
+.portfolio-carousel.fullscreen .carousel-title {
+    font-size: 1.2rem;
+    color: #f2f7f5;
+}
+
+/* Positionnement du titre */
+.carousel-title-container.top-left {
     top: 0;
     left: 0;
+    text-align: left;
 }
 
-.carousel-title.top-right {
+.carousel-title-container.top-right {
     top: 0;
     right: 0;
+    text-align: right;
 }
 
-.carousel-title.bottom-left {
+.carousel-title-container.top-center {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.carousel-title-container.bottom-left {
     bottom: 0;
     left: 0;
+    text-align: left;
 }
 
-.carousel-title.bottom-right {
+.carousel-title-container.bottom-right {
     bottom: 0;
     right: 0;
+    text-align: right;
 }
 
-.carousel-description {
+.carousel-title-container.bottom-center {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.carousel-title-container.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.portfolio-carousel.fullscreen .carousel-title-container.center {
     position: absolute;
-    margin: 20px;
-    color: #fff;
-    font-size: 16px;
-    line-height: 1.5;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    max-width: 50%;
-    z-index: 5;
 }
 
-.carousel-description.top {
-    top: 0;
-}
-
-.carousel-description.bottom {
-    bottom: 0;
-}
-
-/* Thumbnails */
+/* ==========================================================================
+   Carousel - Miniatures
+   ========================================================================== */
 .carousel-thumbnails {
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 10px 0;
-    margin-top: 10px;
+    padding: 5px;
+    margin: 5px;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
@@ -319,12 +333,13 @@
 
 .carousel-thumbnail:hover {
     border-color: rgba(255, 255, 255, 0.8);
-    transform: scale(1.05);
+    transform: scale(1.07);
+    box-shadow: 6px 6px 9px rgba(0, 0, 0, 0.2);
 }
 
 .carousel-thumbnail.active {
     border-color: #fff;
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .carousel-thumbnail img {
@@ -333,35 +348,166 @@
     object-fit: cover;
 }
 
-/* Color Palette */
-.portfolio-color-palette {
+/* ==========================================================================
+   Carousel - Miniatures en mode plein écran
+   ========================================================================== */
+.portfolio-carousel.fullscreen .carousel-thumbnails {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
     display: flex;
     justify-content: center;
-    margin: 20px 0;
+    align-items: center;
+    max-width: 90%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.portfolio-carousel.fullscreen .carousel-thumbnails::-webkit-scrollbar {
+    display: none;
+}
+
+/* ==========================================================================
+   Carousel - Flèches de navigation
+   ========================================================================== */
+.carousel-nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, box-shadow 0.3s ease, scale 0.3s ease, border-color 0.3s ease;
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Utiliser le sélecteur de combinaison pour cibler les flèches lorsque les prévisualisations sont survolées */
+.carousel-container:has(.carousel-preview-container.prev:hover) .carousel-nav-arrow.prev {
+    opacity: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    scale: 1.05;
+}
+
+.carousel-container:has(.carousel-preview-container.next:hover) .carousel-nav-arrow.next {
+    opacity: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    scale: 1.05;
+}
+
+.carousel-container:has(.carousel-preview-container.prev:hover) .carousel-nav-arrow.prev::before {
+    border-color: #d4d4d4;
+}
+
+.carousel-container:has(.carousel-preview-container.next:hover) .carousel-nav-arrow.next::before {
+    border-color: #d4d4d4;
+}
+
+.carousel-nav-arrow.prev {
+    left: 10px;
+}
+
+.carousel-nav-arrow.next {
+    right: 10px;
+}
+
+.carousel-nav-arrow::before {
+    content: '';
+    width: 15px;
+    height: 15px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-radius: 4px;
+    border-color: #8f8f8f;
+}
+
+.carousel-nav-arrow.prev::before {
+    transform: rotate(-135deg);
+    margin-left: 5px;
+}
+
+.carousel-nav-arrow.next::before {
+    transform: rotate(45deg);
+    margin-right: 5px;
+}
+
+/* ==========================================================================
+   Carousel - Flèches de navigation en mode plein écran
+   ========================================================================== */
+.portfolio-carousel.fullscreen .carousel-nav-arrow {
+    display: none;
+}
+
+/* ==========================================================================
+   Palette de couleurs
+   ========================================================================== */
+.portfolio-color-palette {
+    display: flex;
+    justify-content: space-around;
+    margin-block: 3rem;
+    gap: 2rem;
+    flex-wrap: nowrap;
+    position: relative;
+}
+
+.color-item {
+    width: 100%;
+    height: auto;
     position: relative;
 }
 
 .color-rectangle {
+    height: 15px;
     flex: 1;
     position: relative;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: box-shadow 0.3s ease;
+    border-radius: 5px;
+    box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 0, 0.3), 4px 4px 6px rgba(0, 0, 0, 0.2)
+}
+
+.portfolio-color-palette:has(.color-comment.top) {
+    margin-block-start: 4rem;
 }
 
 .color-rectangle:hover {
-    transform: translateY(-5px);
+    box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 0, 0.3), 4px 4px 6px rgba(0, 0, 0, 0.3)
 }
 
 .color-comment {
     position: absolute;
-    font-size: 12px;
-    background: rgba(0, 0, 0, 0.7);
-    color: #fff;
+    font-size: 12px; 
+    color: #2e3d38;
     padding: 2px 8px;
     border-radius: 4px;
-    white-space: nowrap;
-    opacity: 0;
     transition: opacity 0.3s ease;
+    overflow: hidden;
+    text-align: center;
+    white-space: normal;
+    word-break: break-all;
+    opacity:0.8;
+    width: calc(100% + 1rem);
+    height: 3rem;
 }
 
 .color-comment.top {
@@ -369,6 +515,7 @@
     left: 50%;
     transform: translateX(-50%);
     margin-bottom: 5px;
+    align-content: end;
 }
 
 .color-comment.bottom {
@@ -376,20 +523,23 @@
     left: 50%;
     transform: translateX(-50%);
     margin-top: 5px;
+    align-content: start;
 }
 
-.color-rectangle:hover .color-comment {
+.color-rectangle:hover .color-comment, .color-comment:hover {
     opacity: 1;
 }
 
-/* Responsive Adjustments */
+/* ==========================================================================
+   Ajustements responsifs
+   ========================================================================== */
 @media (max-width: 768px) {
     .carousel-title {
         font-size: 20px;
         margin: 10px;
     }
     
-    .carousel-description {
+    .carousel-slide-description {
         font-size: 14px;
         margin: 10px;
         max-width: 70%;
@@ -408,6 +558,10 @@
     .carousel-preview-image {
         width: 60px;
     }
+
+    .portfolio-carousel.fullscreen .carousel-preview-image {
+        width: 30%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -416,7 +570,7 @@
         margin: 5px;
     }
     
-    .carousel-description {
+    .carousel-slide-description {
         font-size: 12px;
         margin: 5px;
         max-width: 90%;
@@ -436,51 +590,11 @@
     .carousel-preview-image {
         width: 40px;
     }
-} 
+    .portfolio-color-palette {
+        flex-wrap: wrap;
+    }
 
-
-@keyframes slideToRightAndReturn {
-    0% {
-        transform: translateX(0) translateY(-50%);
-        z-index: 0;
-    }
-    40% {
-        transform: translateX(5%) translateY(-50%);
-        z-index: 0;
-    }
-    50% {
-        transform: translateX(5%) translateY(-50%); 
-        z-index: 3;
-    }
-    60% {
-        transform: translateX(5%) translateY(-50%);
-        z-index: 3;
-    }
-    100% {
-        transform: translateX(-5%) translateY(-50%);
-        z-index: 3;
+    .portfolio-carousel.fullscreen .carousel-preview-image {
+        width: 20%;
     }
 }
-
-@keyframes slideToLeftAndReturn {
-    0% {
-        transform: translateX(0) translateY(-50%);
-        z-index: 0;
-    }
-    40% {
-        transform: translateX(-5%) translateY(-50%);
-        z-index: 0;
-    }
-    50% {
-        transform: translateX(-5%) translateY(-50%);
-        z-index: 3;
-    }
-    60% {
-        transform: translateX(-5%) translateY(-50%);
-        z-index: 3;
-    }
-    100% {
-        transform: translateX(5%) translateY(-50%);
-        z-index: 3;
-    }
-}   

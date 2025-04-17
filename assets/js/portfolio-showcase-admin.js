@@ -27,15 +27,15 @@ jQuery(document).ready(function($) {
                 var image = {
                     id: attachment.id,
                     url: attachment.url,
-                    title: attachment.title,
+                    title: '',
                     description: ''
                 };
                 
                 // Créer l'élément HTML pour l'image
                 var imageItem = $('<div class="carousel-image-item" data-id="' + image.id + '">' +
-                    '<img src="' + image.url + '" alt="' + image.title + '">' +
+                    '<img src="' + image.url + '" alt="">' +
                     '<div class="image-details">' +
-                    '<input type="text" name="carousel_images[' + currentIndex + '][title]" value="' + image.title + '" placeholder="Image title">' +
+                    '<input type="text" name="carousel_images[' + currentIndex + '][title]" value="" placeholder="Image title">' +
                     '<textarea name="carousel_images[' + currentIndex + '][description]" placeholder="Image description"></textarea>' +
                     '</div>' +
                     '<input type="hidden" name="carousel_images[' + currentIndex + '][id]" value="' + image.id + '">' +
@@ -128,8 +128,12 @@ jQuery(document).ready(function($) {
         });
         
         // Créer un champ caché pour stocker les données de couleur
-        if (colorData.length > 0) {
-            $('<input type="hidden" name="color_palette_data" value="' + JSON.stringify(colorData) + '">').appendTo('form#post');
-        }
+        // Toujours ajouter le champ, même si la palette est vide
+        $('<input type="hidden" name="color_palette_data" value="' + JSON.stringify(colorData) + '">').appendTo('form#post');
+    });
+    
+    // Mettre à jour l'affichage de la valeur d'opacité
+    $('input[name="carousel_settings[background_opacity]"]').on('input', function() {
+        $(this).siblings('.opacity-value').text($(this).val() + '%');
     });
 }); 

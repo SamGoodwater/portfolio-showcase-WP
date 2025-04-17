@@ -1,0 +1,178 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Portfolio Showcase\n"
+"POT-Creation-Date: 2023-04-14 12:00+0200\n"
+"PO-Revision-Date: 2023-04-14 12:00+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.0\n"
+"X-Domain: portfolio-showcase\n"
+
+#: includes/class-portfolio-post-type.php:13
+msgid "Portfolio Projects"
+msgstr "Projets de Portfolio"
+
+#: includes/class-portfolio-post-type.php:14
+msgid "Portfolio Project"
+msgstr "Projet de Portfolio"
+
+#: includes/class-portfolio-post-type.php:15
+msgid "Portfolio"
+msgstr "Portfolio"
+
+#: includes/class-portfolio-post-type.php:16
+msgid "Portfolio Project"
+msgstr "Projet de Portfolio"
+
+#: includes/class-portfolio-post-type.php:17
+msgid "Project Archives"
+msgstr "Archives des Projets"
+
+#: includes/class-portfolio-post-type.php:18
+msgid "Project Attributes"
+msgstr "Attributs du Projet"
+
+#: includes/class-portfolio-post-type.php:19
+msgid "Parent Project:"
+msgstr "Projet Parent :"
+
+#: includes/class-portfolio-post-type.php:20
+msgid "All Projects"
+msgstr "Tous les Projets"
+
+#: includes/class-portfolio-post-type.php:21
+msgid "Add New Project"
+msgstr "Ajouter un Nouveau Projet"
+
+#: includes/class-portfolio-post-type.php:22
+msgid "Add New"
+msgstr "Ajouter"
+
+#: includes/class-portfolio-post-type.php:23
+msgid "New Project"
+msgstr "Nouveau Projet"
+
+#: includes/class-portfolio-post-type.php:24
+msgid "Edit Project"
+msgstr "Modifier le Projet"
+
+#: includes/class-portfolio-post-type.php:25
+msgid "Update Project"
+msgstr "Mettre à Jour le Projet"
+
+#: includes/class-portfolio-post-type.php:26
+msgid "View Project"
+msgstr "Voir le Projet"
+
+#: includes/class-portfolio-post-type.php:27
+msgid "View Projects"
+msgstr "Voir les Projets"
+
+#: includes/class-portfolio-post-type.php:28
+msgid "Search Project"
+msgstr "Rechercher un Projet"
+
+#: includes/class-portfolio-post-type.php:29
+msgid "Not found"
+msgstr "Non trouvé"
+
+#: includes/class-portfolio-post-type.php:30
+msgid "Not found in Trash"
+msgstr "Non trouvé dans la Corbeille"
+
+#: includes/class-portfolio-post-type.php:31
+msgid "Project Image"
+msgstr "Image du Projet"
+
+#: includes/class-portfolio-post-type.php:32
+msgid "Set project image"
+msgstr "Définir l'image du projet"
+
+#: includes/class-portfolio-post-type.php:33
+msgid "Remove project image"
+msgstr "Supprimer l'image du projet"
+
+#: includes/class-portfolio-post-type.php:34
+msgid "Use as project image"
+msgstr "Utiliser comme image du projet"
+
+#: includes/class-portfolio-post-type.php:38
+msgid "Portfolio Project"
+msgstr "Projet de Portfolio"
+
+#: includes/class-portfolio-metaboxes.php:19
+msgid "Project Carousel"
+msgstr "Carrousel du Projet"
+
+#: includes/class-portfolio-metaboxes.php:28
+msgid "Color Palette"
+msgstr "Palette de Couleurs"
+
+#: includes/class-portfolio-metaboxes.php:37
+msgid "Style Options"
+msgstr "Options de Style"
+
+#: includes/class-portfolio-metaboxes.php:46
+msgid "Display Shortcode"
+msgstr "Afficher le Shortcode"
+
+#: includes/class-portfolio-metaboxes.php:71
+msgid "Carousel Images"
+msgstr "Images du Carrousel"
+
+#: includes/class-portfolio-metaboxes.php:89
+msgid "Image title"
+msgstr "Titre de l'image"
+
+#: includes/class-portfolio-metaboxes.php:91
+msgid "Image description"
+msgstr "Description de l'image"
+
+#: includes/class-portfolio-metaboxes.php:163
+msgid "Color comment"
+msgstr "Commentaire de couleur"
+
+#: includes/class-portfolio-metaboxes.php:199
+msgid "Color comment"
+msgstr "Commentaire de couleur"
+
+#: includes/class-portfolio-metaboxes.php:211
+msgid "Color comment"
+msgstr "Commentaire de couleur"
+
+#: includes/class-portfolio-metaboxes.php:267
+msgid "e.g., 10px or 10px 20px"
+msgstr "ex: 10px ou 10px 20px"
+
+#: includes/class-portfolio-metaboxes.php:274
+msgid "e.g., 10px or 10px 20px"
+msgstr "ex: 10px ou 10px 20px"
+
+#: includes/class-portfolio-metaboxes.php:280
+msgid ".portfolio-item { /* your css */ }"
+msgstr ".portfolio-item { /* votre css */ }"
+
+#: assets/js/portfolio-showcase-admin.js:12
+msgid "Select Carousel Images"
+msgstr "Sélectionner les Images du Carrousel"
+
+#: assets/js/portfolio-showcase-admin.js:14
+msgid "Add to Carousel"
+msgstr "Ajouter au Carrousel"
+
+#: assets/js/portfolio-showcase-admin.js:31
+msgid "Image title"
+msgstr "Titre de l'image"
+
+#: assets/js/portfolio-showcase-admin.js:32
+msgid "Image description"
+msgstr "Description de l'image"
+
+#: assets/js/portfolio-showcase-admin.js:77
+msgid "Color comment"
+msgstr "Commentaire de couleur" 

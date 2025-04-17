@@ -1,4 +1,19 @@
 <?php
+// WordPress core functions
+use function add_action;
+use function add_meta_box;
+use function get_post_meta;
+use function update_post_meta;
+use function wp_nonce_field;
+use function wp_verify_nonce;
+use function sanitize_text_field;
+use function sanitize_hex_color;
+use function absint;
+use function esc_attr;
+use function esc_html;
+use function esc_url;
+use function __;
+
 class Portfolio_Metaboxes {
     private $post_type;
 
@@ -32,16 +47,6 @@ class Portfolio_Metaboxes {
             'high'
         );
 
-        // Style Options Metabox
-        add_meta_box(
-            'portfolio_style_options',
-            __('Style Options', 'portfolio-showcase'),
-            array($this, 'render_style_options_metabox'),
-            $this->post_type,
-            'side',
-            'default'
-        );
-
         // Shortcode Metabox
         add_meta_box(
             'portfolio_shortcode',
@@ -49,7 +54,7 @@ class Portfolio_Metaboxes {
             array($this, 'render_shortcode_metabox'),
             $this->post_type,
             'side',
-            'high'
+            'default'
         );
     }
 
@@ -60,12 +65,22 @@ class Portfolio_Metaboxes {
         $carousel_images = get_post_meta($post->ID, '_portfolio_carousel_images', true);
         $carousel_settings = get_post_meta($post->ID, '_portfolio_carousel_settings', true);
         
+        // Get global settings
+        $settings_manager = new Portfolio_Settings();
+        $global_settings = $settings_manager->get_carousel_settings();
+        
         // Default settings
         $default_settings = array(
-            'enable_fullscreen' => true,
-            'description_position' => 'bottom',
-            'title_position' => 'top-left',
-            'background_color' => '#000000'
+            'local-carousel-enable-fullscreen' => $global_settings['local-carousel-enable-fullscreen'],
+            'local-carousel-position-description' => $global_settings['local-carousel-position-description'],
+            'local-carousel-position-title' => $global_settings['local-carousel-position-title'],
+            'local-carousel-color-background-fullscreen' => $global_settings['local-carousel-color-background-fullscreen'],
+            'local-carousel-color-background' => $global_settings['local-carousel-color-background'],
+            'local-carousel-color-title' => $global_settings['local-carousel-color-title'],
+            'local-carousel-color-description' => $global_settings['local-carousel-color-description'],
+            'local-carousel-opacity-background-fullscreen' => $global_settings['local-carousel-opacity-background-fullscreen'],
+            'local-carousel-color-description-fullscreen' => $global_settings['local-carousel-color-description-fullscreen'],
+            'local-carousel-color-title-fullscreen' => $global_settings['local-carousel-color-title-fullscreen']
         );
         
         $settings = wp_parse_args($carousel_settings, $default_settings);
@@ -111,49 +126,85 @@ class Portfolio_Metaboxes {
                 
                 <p>
                     <label>
-                        <input type="checkbox" name="carousel_settings[enable_fullscreen]" 
-                               <?php checked($settings['enable_fullscreen'], true); ?>>
+                        <input type="checkbox" name="carousel_settings[local-carousel-enable-fullscreen]" 
+                               <?php checked($settings['local-carousel-enable-fullscreen'], true); ?>>
                         <?php _e('Enable Fullscreen Mode', 'portfolio-showcase'); ?>
                     </label>
                 </p>
 
-                <p>
-                    <label><?php _e('Description Position:', 'portfolio-showcase'); ?></label>
-                    <select name="carousel_settings[description_position]">
-                        <option value="top" <?php selected($settings['description_position'], 'top'); ?>>
-                            <?php _e('Top', 'portfolio-showcase'); ?>
-                        </option>
-                        <option value="bottom" <?php selected($settings['description_position'], 'bottom'); ?>>
-                            <?php _e('Bottom', 'portfolio-showcase'); ?>
-                        </option>
+                <div class="portfolio-showcase-field">
+                    <label for="carousel_settings[local-carousel-position-description]"><?php _e('Position de la description', 'portfolio-showcase'); ?></label>
+                    <select name="carousel_settings[local-carousel-position-description]" id="carousel_settings[local-carousel-position-description]">
+                        <option value="top" <?php selected($settings['local-carousel-position-description'], 'top'); ?>><?php _e('Haut', 'portfolio-showcase'); ?></option>
+                        <option value="bottom" <?php selected($settings['local-carousel-position-description'], 'bottom'); ?>><?php _e('Bas', 'portfolio-showcase'); ?></option>
                     </select>
-                </p>
+                </div>
+
+                <div class="portfolio-showcase-field">
+                    <label for="carousel_settings[local-carousel-color-description-fullscreen]"><?php _e('Couleur du texte de la description (mode plein écran)', 'portfolio-showcase'); ?></label>
+                    <input type="color" name="carousel_settings[local-carousel-color-description-fullscreen]" id="carousel_settings[local-carousel-color-description-fullscreen]" value="<?php echo esc_attr($settings['local-carousel-color-description-fullscreen'] ?? '#ffffff'); ?>" />
+                </div>
+
+                <div class="portfolio-showcase-field">
+                    <label for="carousel_settings[local-carousel-color-title-fullscreen]"><?php _e('Couleur du texte du titre (mode plein écran)', 'portfolio-showcase'); ?></label>
+                    <input type="color" name="carousel_settings[local-carousel-color-title-fullscreen]" id="carousel_settings[local-carousel-color-title-fullscreen]" value="<?php echo esc_attr($settings['local-carousel-color-title-fullscreen'] ?? '#ffffff'); ?>" />
+                </div>
 
                 <p>
                     <label><?php _e('Title Position:', 'portfolio-showcase'); ?></label>
-                    <select name="carousel_settings[title_position]">
-                        <option value="top-left" <?php selected($settings['title_position'], 'top-left'); ?>>
+                    <select name="carousel_settings[local-carousel-position-title]">
+                        <option value="top-left" <?php selected($settings['local-carousel-position-title'], 'top-left'); ?>>
                             <?php _e('Top Left', 'portfolio-showcase'); ?>
                         </option>
-                        <option value="top-right" <?php selected($settings['title_position'], 'top-right'); ?>>
+                        <option value="top-right" <?php selected($settings['local-carousel-position-title'], 'top-right'); ?>>
                             <?php _e('Top Right', 'portfolio-showcase'); ?>
                         </option>
-                        <option value="bottom-left" <?php selected($settings['title_position'], 'bottom-left'); ?>>
+                        <option value="top-center" <?php selected($settings['local-carousel-position-title'], 'top-center'); ?>>
+                            <?php _e('top Center', 'portfolio-showcase'); ?>
+                        </option>
+                        <option value="bottom-left" <?php selected($settings['local-carousel-position-title'], 'bottom-left'); ?>>
                             <?php _e('Bottom Left', 'portfolio-showcase'); ?>
                         </option>
-                        <option value="bottom-right" <?php selected($settings['title_position'], 'bottom-right'); ?>>
+                        <option value="bottom-center" <?php selected($settings['local-carousel-position-title'], 'bottom-center'); ?>>
+                            <?php _e('Bottom Center', 'portfolio-showcase'); ?>
+                        </option>
+                        <option value="bottom-right" <?php selected($settings['local-carousel-position-title'], 'bottom-right'); ?>>
                             <?php _e('Bottom Right', 'portfolio-showcase'); ?>
                         </option>
-                        <option value="center" <?php selected($settings['title_position'], 'center'); ?>>
+                        <option value="center" <?php selected($settings['local-carousel-position-title'], 'center'); ?>>
                             <?php _e('Center', 'portfolio-showcase'); ?>
                         </option>
                     </select>
                 </p>
 
+                <div class="portfolio-showcase-field">
+                    <label for="carousel_settings[local-carousel-color-background-fullscreen]"><?php _e('Couleur de fond', 'portfolio-showcase'); ?></label>
+                    <input type="color" name="carousel_settings[local-carousel-color-background-fullscreen]" id="carousel_settings[local-carousel-color-background-fullscreen]" value="<?php echo esc_attr($settings['local-carousel-color-background-fullscreen'] ?? '#000000'); ?>" />
+                </div>
+
                 <p>
-                    <label><?php _e('Fullscreen Background Color:', 'portfolio-showcase'); ?></label>
-                    <input type="color" name="carousel_settings[background_color]" 
-                           value="<?php echo esc_attr($settings['background_color']); ?>">
+                    <label><?php _e('Normal Mode Background Color:', 'portfolio-showcase'); ?></label>
+                    <input type="color" name="carousel_settings[local-carousel-color-background]" 
+                           value="<?php echo esc_attr(isset($settings['local-carousel-color-background']) ? $settings['local-carousel-color-background'] : '#f5f5f5'); ?>">
+                </p>
+
+                <p>
+                    <label><?php _e('Title Text Color:', 'portfolio-showcase'); ?></label>
+                    <input type="color" name="carousel_settings[local-carousel-color-title]" 
+                           value="<?php echo esc_attr(isset($settings['local-carousel-color-title']) ? $settings['local-carousel-color-title'] : '#f5f5f5'); ?>">
+                </p>
+
+                <p>
+                    <label><?php _e('Description Text Color:', 'portfolio-showcase'); ?></label>
+                    <input type="color" name="carousel_settings[local-carousel-color-description]" 
+                           value="<?php echo esc_attr(isset($settings['local-carousel-color-description']) ? $settings['local-carousel-color-description'] : '#2e3d38'); ?>">
+                </p>
+
+                <p>
+                    <label><?php _e('Fullscreen Background Opacity:', 'portfolio-showcase'); ?></label>
+                    <input type="range" name="carousel_settings[local-carousel-opacity-background-fullscreen]" 
+                           min="0" max="100" value="<?php echo esc_attr(isset($settings['local-carousel-opacity-background-fullscreen']) ? $settings['local-carousel-opacity-background-fullscreen'] : 90); ?>">
+                    <span class="opacity-value"><?php echo esc_html(isset($settings['local-carousel-opacity-background-fullscreen']) ? $settings['local-carousel-opacity-background-fullscreen'] : 90); ?>%</span>
                 </p>
             </div>
         </div>
@@ -167,14 +218,15 @@ class Portfolio_Metaboxes {
         $colors = get_post_meta($post->ID, '_portfolio_color_palette', true);
         $palette_settings = get_post_meta($post->ID, '_portfolio_palette_settings', true);
         
-        // Débogage temporaire
-        error_log('Rendering color palette metabox');
-        error_log('Saved colors: ' . print_r($colors, true));
+        // Get global settings
+        $settings_manager = new Portfolio_Settings();
+        $global_settings = $settings_manager->get_palette_settings();
         
         // Default settings
         $default_settings = array(
-            'height' => 29,
-            'comment_position' => 'bottom'
+            'local-palette-height-rectangle' => $global_settings['local-palette-height-rectangle'],
+            'local-palette-position-comment' => $global_settings['local-palette-position-comment'],
+            'local-palette-color-comment' => $global_settings['local-palette-color-comment']
         );
         
         $settings = wp_parse_args($palette_settings, $default_settings);
@@ -202,18 +254,7 @@ class Portfolio_Metaboxes {
                             </div>
                             <?php
                         }
-                    } else {
-                        error_log('No colors found or colors is not an array');
-                        // Ajouter un élément de couleur par défaut si aucun n'existe
-                        ?>
-                        <div class="color-item">
-                            <input type="color" name="color_palette[colors][]" value="#000000" data-alpha="true">
-                            <input type="text" name="color_palette[comments][]" 
-                                   placeholder="<?php esc_attr_e('Color comment', 'portfolio-showcase'); ?>">
-                            <button type="button" class="remove-color">×</button>
-                        </div>
-                        <?php
-                    }
+                    } 
                     ?>
                 </div>
                 <button type="button" class="button" id="add-color">
@@ -224,63 +265,28 @@ class Portfolio_Metaboxes {
             <div class="palette-settings">
                 <p>
                     <label><?php _e('Rectangle Height (px):', 'portfolio-showcase'); ?></label>
-                    <input type="number" name="palette_settings[height]" 
-                           value="<?php echo esc_attr($settings['height']); ?>" min="20" max="500">
+                    <input type="number" name="palette_settings[local-palette-height-rectangle]" 
+                           value="<?php echo esc_attr($settings['local-palette-height-rectangle']); ?>" min="0" max="500">
                 </p>
 
                 <p>
                     <label><?php _e('Comments Position:', 'portfolio-showcase'); ?></label>
-                    <select name="palette_settings[comment_position]">
-                        <option value="top" <?php selected($settings['comment_position'], 'top'); ?>>
+                    <select name="palette_settings[local-palette-position-comment]">
+                        <option value="top" <?php selected($settings['local-palette-position-comment'], 'top'); ?>>
                             <?php _e('Top', 'portfolio-showcase'); ?>
                         </option>
-                        <option value="bottom" <?php selected($settings['comment_position'], 'bottom'); ?>>
+                        <option value="bottom" <?php selected($settings['local-palette-position-comment'], 'bottom'); ?>>
                             <?php _e('Bottom', 'portfolio-showcase'); ?>
                         </option>
                     </select>
                 </p>
+                
+                <p>
+                    <label><?php _e('Comment Color:', 'portfolio-showcase'); ?></label>
+                    <input type="color" name="palette_settings[local-palette-color-comment]" 
+                           value="<?php echo esc_attr($settings['local-palette-color-comment']); ?>">
+                </p>
             </div>
-        </div>
-        <?php
-    }
-
-    public function render_style_options_metabox($post) {
-        wp_nonce_field('portfolio_style_options_meta_box', 'portfolio_style_options_meta_box_nonce');
-        
-        // Get saved values
-        $style_options = get_post_meta($post->ID, '_portfolio_style_options', true);
-        
-        // Default settings
-        $default_options = array(
-            'padding' => '',
-            'margin' => '',
-            'custom_css' => ''
-        );
-        
-        $options = wp_parse_args($style_options, $default_options);
-        
-        ?>
-        <div class="portfolio-style-options">
-            <p>
-                <label><?php _e('Padding:', 'portfolio-showcase'); ?></label>
-                <input type="text" name="style_options[padding]" 
-                       value="<?php echo esc_attr($options['padding']); ?>" 
-                       placeholder="e.g., 10px or 10px 20px">
-            </p>
-
-            <p>
-                <label><?php _e('Margin:', 'portfolio-showcase'); ?></label>
-                <input type="text" name="style_options[margin]" 
-                       value="<?php echo esc_attr($options['margin']); ?>"
-                       placeholder="e.g., 10px or 10px 20px">
-            </p>
-
-            <p>
-                <label><?php _e('Custom CSS:', 'portfolio-showcase'); ?></label>
-                <textarea name="style_options[custom_css]" rows="4"
-                          placeholder=".portfolio-item { /* your css */ }"
-                ><?php echo esc_textarea($options['custom_css']); ?></textarea>
-            </p>
         </div>
         <?php
     }
@@ -439,7 +445,15 @@ class Portfolio_Metaboxes {
                 if (!empty($color_palette)) {
                     update_post_meta($post_id, '_portfolio_color_palette', $color_palette);
                     error_log('Color palette saved successfully: ' . print_r($color_palette, true));
+                } else {
+                    // Si la palette est vide, supprimer les métadonnées
+                    delete_post_meta($post_id, '_portfolio_color_palette');
+                    error_log('Color palette is empty, deleting metadata');
                 }
+            } else {
+                // Si les données sont vides, supprimer les métadonnées
+                delete_post_meta($post_id, '_portfolio_color_palette');
+                error_log('Color palette data is empty, deleting metadata');
             }
         }
         // Ancienne méthode avec color_palette
@@ -503,19 +517,12 @@ class Portfolio_Metaboxes {
             $palette_settings = $this->sanitize_palette_settings($_POST['palette_settings']);
             update_post_meta($post_id, '_portfolio_palette_settings', $palette_settings);
         }
-
-        // Save style options
-        if (isset($_POST['style_options'])) {
-            $style_options = $this->sanitize_style_options($_POST['style_options']);
-            update_post_meta($post_id, '_portfolio_style_options', $style_options);
-        }
     }
 
     private function verify_nonces($post_id) {
         $nonces = array(
             'portfolio_carousel_meta_box_nonce' => 'portfolio_carousel_meta_box',
-            'portfolio_color_palette_meta_box_nonce' => 'portfolio_color_palette_meta_box',
-            'portfolio_style_options_meta_box_nonce' => 'portfolio_style_options_meta_box'
+            'portfolio_color_palette_meta_box_nonce' => 'portfolio_color_palette_meta_box'
         );
 
         // Vérifier chaque nonce individuellement
@@ -534,10 +541,16 @@ class Portfolio_Metaboxes {
 
     private function sanitize_carousel_settings($settings) {
         return array(
-            'enable_fullscreen' => isset($settings['enable_fullscreen']),
-            'description_position' => sanitize_text_field($settings['description_position']),
-            'title_position' => sanitize_text_field($settings['title_position']),
-            'background_color' => sanitize_hex_color($settings['background_color'])
+            'local-carousel-enable-fullscreen' => isset($settings['local-carousel-enable-fullscreen']),
+            'local-carousel-position-description' => !empty($settings['local-carousel-position-description']) ? sanitize_text_field($settings['local-carousel-position-description']) : 'bottom',
+            'local-carousel-position-title' => !empty($settings['local-carousel-position-title']) ? sanitize_text_field($settings['local-carousel-position-title']) : 'top-left',
+            'local-carousel-color-background-fullscreen' => !empty($settings['local-carousel-color-background-fullscreen']) ? sanitize_hex_color($settings['local-carousel-color-background-fullscreen']) : '#111111',
+            'local-carousel-color-background' => isset($settings['local-carousel-color-background']) ? sanitize_hex_color($settings['local-carousel-color-background']) : '#f5f5f5',
+            'local-carousel-color-title' => isset($settings['local-carousel-color-title']) ? sanitize_hex_color($settings['local-carousel-color-title']) : '#f5f5f5',
+            'local-carousel-color-description' => isset($settings['local-carousel-color-description']) ? sanitize_hex_color($settings['local-carousel-color-description']) : '#2e3d38',
+            'local-carousel-opacity-background-fullscreen' => isset($settings['local-carousel-opacity-background-fullscreen']) ? absint($settings['local-carousel-opacity-background-fullscreen']) : 90,
+            'local-carousel-color-description-fullscreen' => isset($settings['local-carousel-color-description-fullscreen']) ? sanitize_hex_color($settings['local-carousel-color-description-fullscreen']) : '#f2f7f5',
+            'local-carousel-color-title-fullscreen' => isset($settings['local-carousel-color-title-fullscreen']) ? sanitize_hex_color($settings['local-carousel-color-title-fullscreen']) : '#f5f5f5'
         );
     }
 
@@ -571,16 +584,9 @@ class Portfolio_Metaboxes {
 
     private function sanitize_palette_settings($settings) {
         return array(
-            'height' => absint($settings['height']),
-            'comment_position' => sanitize_text_field($settings['comment_position'])
-        );
-    }
-
-    private function sanitize_style_options($options) {
-        return array(
-            'padding' => sanitize_text_field($options['padding']),
-            'margin' => sanitize_text_field($options['margin']),
-            'custom_css' => wp_strip_all_tags($options['custom_css'])
+            'local-palette-height-rectangle' => absint($settings['local-palette-height-rectangle']),
+            'local-palette-position-comment' => sanitize_text_field($settings['local-palette-position-comment']),
+            'local-palette-color-comment' => sanitize_hex_color($settings['local-palette-color-comment'])
         );
     }
 } 
