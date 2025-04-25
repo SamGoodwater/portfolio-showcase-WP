@@ -132,6 +132,7 @@ jQuery(document).ready(function($) {
             this.setupClickHandlers();
             
             this.update();
+            this.updateSize();        
         }
 
         /**
@@ -141,6 +142,7 @@ jQuery(document).ready(function($) {
             this.updateColors();
             this.updateBackgroundColor();
             this.updateTitleStyles();
+            this.updateSize();
         }
 
         /**
@@ -580,6 +582,26 @@ jQuery(document).ready(function($) {
                 e.stopPropagation();
                 this.nextSlide();
             });
+        }
+
+        /**
+         * Met à jour la taille du carousel
+         */
+        updateSize() {
+            const width = getSettingsValue(
+                this.settings,
+                'local-carousel-width',
+                '100%'
+            );
+            
+            const height = getSettingsValue(
+                this.settings,
+                'local-carousel-height',
+                '100%'
+            );
+            
+            applyStyle(this.element, null, 'width', width);
+            applyStyle(this.element, null, 'height', height);
         }
     }
 

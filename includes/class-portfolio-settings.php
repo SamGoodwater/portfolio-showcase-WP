@@ -16,6 +16,8 @@ class Portfolio_Settings {
             'global-carousel-opacity-background-fullscreen' => 90,
             'global-carousel-position-title' => 'top-left',
             'global-carousel-position-description' => 'bottom',
+            'global-carousel-width' => '100%',
+            'global-carousel-height' => '100%',
             
             // Palette settings
             'global-palette-height-rectangle' => 15,
@@ -187,6 +189,26 @@ class Portfolio_Settings {
                 )
             )
         );
+
+        // Carousel Width
+        add_settings_field(
+            'global-carousel-width',
+            __('Carousel Width', 'portfolio-showcase'),
+            array($this, 'render_size_field'),
+            'portfolio-showcase-settings',
+            'portfolio_showcase_carousel_settings',
+            array('field' => 'global-carousel-width')
+        );
+
+        // Carousel Height
+        add_settings_field(
+            'global-carousel-height',
+            __('Carousel Height', 'portfolio-showcase'),
+            array($this, 'render_size_field'),
+            'portfolio-showcase-settings',
+            'portfolio_showcase_carousel_settings',
+            array('field' => 'global-carousel-height')
+        );
     }
 
     private function add_palette_fields() {
@@ -316,6 +338,20 @@ class Portfolio_Settings {
         <?php
     }
 
+    public function render_size_field($args) {
+        $settings = $this->get_settings();
+        $field = $args['field'];
+        $value = isset($settings[$field]) ? $settings[$field] : $this->default_settings[$field];
+        ?>
+        <input type="text" 
+               name="<?php echo esc_attr($this->option_name . '[' . $field . ']'); ?>" 
+               value="<?php echo esc_attr($value); ?>"
+               class="portfolio-showcase-size-field"
+               placeholder="e.g. 100%, 500px, 20rem">
+        <p class="description"><?php _e('Enter a valid CSS size value (e.g. 100%, 500px, 20rem)', 'portfolio-showcase'); ?></p>
+        <?php
+    }
+
     public function sanitize_settings($input) {
         $sanitized = array();
         
@@ -336,7 +372,24 @@ class Portfolio_Settings {
         $sanitized['global-palette-position-comment'] = sanitize_text_field($input['global-palette-position-comment']);
         $sanitized['global-palette-color-comment'] = sanitize_hex_color($input['global-palette-color-comment']);
         
+        // Sanitize size fields
+        if (isset($input['global-carousel-width'])) {
+            $sanitized['global-carousel-width'] = $this->sanitize_size_value($input['global-carousel-width']);
+        }
+        if (isset($input['global-carousel-height'])) {
+            $sanitized['global-carousel-height'] = $this->sanitize_size_value($input['global-carousel-height']);
+        }
+
         return $sanitized;
+    }
+
+    private function sanitize_size_value($value) {
+        // Regex pattern for CSS size values
+        $pattern = '/^(\d+(?:\.\d+)?)(px|%|em|rem|vh|vw)$/';
+        if (preg_match($pattern, $value)) {
+            return $value;
+        }
+        return $this->default_settings['global-carousel-width']; // Return default if invalid
     }
 
     public function get_settings() {
@@ -356,7 +409,9 @@ class Portfolio_Settings {
             'local-carousel-color-description' => $settings['global-carousel-color-description'],
             'local-carousel-opacity-background-fullscreen' => $settings['global-carousel-opacity-background-fullscreen'],
             'local-carousel-color-description-fullscreen' => $settings['global-carousel-color-description-fullscreen'],
-            'local-carousel-color-title-fullscreen' => $settings['global-carousel-color-title-fullscreen']
+            'local-carousel-color-title-fullscreen' => $settings['global-carousel-color-title-fullscreen'],
+            'local-carousel-width' => $settings['global-carousel-width'],
+            'local-carousel-height' => $settings['global-carousel-height']
         );
     }
 

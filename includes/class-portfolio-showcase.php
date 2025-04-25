@@ -70,11 +70,15 @@ class Portfolio_Showcase {
             return;
         }
 
+        // Enqueue jQuery UI
+        wp_enqueue_script('jquery-ui-sortable');
+        wp_enqueue_style('jquery-ui', 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
+
         // Enqueue admin CSS
         wp_enqueue_style(
             'portfolio-showcase-admin',
             PORTFOLIO_SHOWCASE_URL . 'assets/css/portfolio-showcase-admin.css',
-            array(),
+            array('jquery-ui'),
             $this->version
         );
 
@@ -82,7 +86,7 @@ class Portfolio_Showcase {
         wp_enqueue_script(
             'portfolio-showcase-admin',
             PORTFOLIO_SHOWCASE_URL . 'assets/js/portfolio-showcase-admin.js',
-            array('jquery'),
+            array('jquery', 'jquery-ui-sortable'),
             $this->version,
             true
         );

@@ -80,9 +80,12 @@ class Portfolio_Metaboxes {
             'local-carousel-color-description' => $global_settings['local-carousel-color-description'],
             'local-carousel-opacity-background-fullscreen' => $global_settings['local-carousel-opacity-background-fullscreen'],
             'local-carousel-color-description-fullscreen' => $global_settings['local-carousel-color-description-fullscreen'],
-            'local-carousel-color-title-fullscreen' => $global_settings['local-carousel-color-title-fullscreen']
+            'local-carousel-color-title-fullscreen' => $global_settings['local-carousel-color-title-fullscreen'],
+            'local-carousel-width' => $global_settings['local-carousel-width'],
+            'local-carousel-height' => $global_settings['local-carousel-height']
         );
         
+        // Merge saved settings with defaults
         $settings = wp_parse_args($carousel_settings, $default_settings);
         
         // Output template
@@ -108,7 +111,8 @@ class Portfolio_Metaboxes {
                                     </div>
                                     <input type="hidden" name="carousel_images[<?php echo $index; ?>][id]" value="<?php echo esc_attr($image['id']); ?>">
                                     <input type="hidden" name="carousel_images[<?php echo $index; ?>][url]" value="<?php echo esc_attr($image['url']); ?>">
-                                    <button type="button" class="remove-image">×</button>
+                                    <button title="Supprimer l'image" type="button" class="remove-image">×</button>
+                                    <span title="Déplacer l'image" class="move-handle">⋮⋮</span>
                                 </div>
                                 <?php
                             }
@@ -124,6 +128,28 @@ class Portfolio_Metaboxes {
             <div class="carousel-settings">
                 <h4><?php _e('Carousel Settings', 'portfolio-showcase'); ?></h4>
                 
+                <div class="portfolio-showcase-field">
+                    <label for="carousel_settings[local-carousel-width]"><?php _e('Carousel Width', 'portfolio-showcase'); ?></label>
+                    <input type="text" 
+                           name="carousel_settings[local-carousel-width]" 
+                           id="carousel_settings[local-carousel-width]"
+                           value="<?php echo esc_attr($settings['local-carousel-width']); ?>"
+                           class="portfolio-showcase-size-field"
+                           placeholder="e.g. 100%, 500px, 20rem">
+                    <p class="description"><?php _e('Enter a valid CSS size value (e.g. 100%, 500px, 20rem)', 'portfolio-showcase'); ?></p>
+                </div>
+
+                <div class="portfolio-showcase-field">
+                    <label for="carousel_settings[local-carousel-height]"><?php _e('Carousel Height', 'portfolio-showcase'); ?></label>
+                    <input type="text" 
+                           name="carousel_settings[local-carousel-height]" 
+                           id="carousel_settings[local-carousel-height]"
+                           value="<?php echo esc_attr($settings['local-carousel-height']); ?>"
+                           class="portfolio-showcase-size-field"
+                           placeholder="e.g. 100%, 500px, 20rem">
+                    <p class="description"><?php _e('Enter a valid CSS size value (e.g. 100%, 500px, 20rem)', 'portfolio-showcase'); ?></p>
+                </div>
+
                 <p>
                     <label>
                         <input type="checkbox" name="carousel_settings[local-carousel-enable-fullscreen]" 
@@ -540,7 +566,7 @@ class Portfolio_Metaboxes {
     }
 
     private function sanitize_carousel_settings($settings) {
-        return array(
+        $sanitized = array(
             'local-carousel-enable-fullscreen' => isset($settings['local-carousel-enable-fullscreen']),
             'local-carousel-position-description' => !empty($settings['local-carousel-position-description']) ? sanitize_text_field($settings['local-carousel-position-description']) : 'bottom',
             'local-carousel-position-title' => !empty($settings['local-carousel-position-title']) ? sanitize_text_field($settings['local-carousel-position-title']) : 'top-left',
@@ -550,8 +576,12 @@ class Portfolio_Metaboxes {
             'local-carousel-color-description' => isset($settings['local-carousel-color-description']) ? sanitize_hex_color($settings['local-carousel-color-description']) : '#2e3d38',
             'local-carousel-opacity-background-fullscreen' => isset($settings['local-carousel-opacity-background-fullscreen']) ? absint($settings['local-carousel-opacity-background-fullscreen']) : 90,
             'local-carousel-color-description-fullscreen' => isset($settings['local-carousel-color-description-fullscreen']) ? sanitize_hex_color($settings['local-carousel-color-description-fullscreen']) : '#f2f7f5',
-            'local-carousel-color-title-fullscreen' => isset($settings['local-carousel-color-title-fullscreen']) ? sanitize_hex_color($settings['local-carousel-color-title-fullscreen']) : '#f5f5f5'
+            'local-carousel-color-title-fullscreen' => isset($settings['local-carousel-color-title-fullscreen']) ? sanitize_hex_color($settings['local-carousel-color-title-fullscreen']) : '#f5f5f5',
+            'local-carousel-width' => isset($settings['local-carousel-width']) ? $this->sanitize_size_value($settings['local-carousel-width']) : '100%',
+            'local-carousel-height' => isset($settings['local-carousel-height']) ? $this->sanitize_size_value($settings['local-carousel-height']) : '100%'
         );
+
+        return $sanitized;
     }
 
     private function sanitize_carousel_images($images) {
@@ -588,5 +618,14 @@ class Portfolio_Metaboxes {
             'local-palette-position-comment' => sanitize_text_field($settings['local-palette-position-comment']),
             'local-palette-color-comment' => sanitize_hex_color($settings['local-palette-color-comment'])
         );
+    }
+
+    private function sanitize_size_value($value) {
+        // Regex pattern for CSS size values
+        $pattern = '/^(\d+(?:\.\d+)?)(px|%|em|rem|vh|vw)$/';
+        if (preg_match($pattern, $value)) {
+            return $value;
+        }
+        return '100%'; // Return default if invalid
     }
 } 

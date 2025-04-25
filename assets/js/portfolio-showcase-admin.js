@@ -2,6 +2,17 @@ jQuery(document).ready(function($) {
     // Carousel Image Management
     var carouselFrame;
     
+    // Initialiser le tri par glisser-déposer
+    $('#carousel-image-list').sortable({
+        items: '.carousel-image-item',
+        cursor: 'move',
+        opacity: 0.8,
+        placeholder: 'ui-sortable-placeholder',
+        update: function(event, ui) {
+            reindexImages();
+        }
+    });
+    
     $('#add-carousel-images').on('click', function(e) {
         e.preventDefault();
         
@@ -33,6 +44,10 @@ jQuery(document).ready(function($) {
                 
                 // Créer l'élément HTML pour l'image
                 var imageItem = $('<div class="carousel-image-item" data-id="' + image.id + '">' +
+                    '<div class="image-actions">' +
+                    '<span title="Déplacer l\'image" class="move-handle">⋮⋮</span>' +
+                    '<button title="Supprimer l\'image" type="button" class="remove-image">×</button>' +
+                    '</div>' +
                     '<img src="' + image.url + '" alt="">' +
                     '<div class="image-details">' +
                     '<input type="text" name="carousel_images[' + currentIndex + '][title]" value="" placeholder="Image title">' +
@@ -40,7 +55,6 @@ jQuery(document).ready(function($) {
                     '</div>' +
                     '<input type="hidden" name="carousel_images[' + currentIndex + '][id]" value="' + image.id + '">' +
                     '<input type="hidden" name="carousel_images[' + currentIndex + '][url]" value="' + image.url + '">' +
-                    '<button type="button" class="remove-image">×</button>' +
                     '</div>');
                 
                 imageList.append(imageItem);
@@ -135,5 +149,39 @@ jQuery(document).ready(function($) {
     // Mettre à jour l'affichage de la valeur d'opacité
     $('input[name="carousel_settings[background_opacity]"]').on('input', function() {
         $(this).siblings('.opacity-value').text($(this).val() + '%');
+    });
+
+    // Validate size fields in real-time
+    $('.portfolio-showcase-size-field').on('input', function() {
+        const value = $(this).val();
+        const pattern = /^(\d+(?:\.\d+)?)(px|%|em|rem|vh|vw)$/;
+        
+        if (value && !pattern.test(value)) {
+            $(this).addClass('error');
+            $(this).next('.description').addClass('error');
+        } else {
+            $(this).removeClass('error');
+            $(this).next('.description').removeClass('error');
+        }
+    });
+
+    // Validate size fields on form submission
+    $('form').on('submit', function(e) {
+        let hasError = false;
+        $('.portfolio-showcase-size-field').each(function() {
+            const value = $(this).val();
+            const pattern = /^(\d+(?:\.\d+)?)(px|%|em|rem|vh|vw)$/;
+            
+            if (value && !pattern.test(value)) {
+                $(this).addClass('error');
+                $(this).next('.description').addClass('error');
+                hasError = true;
+            }
+        });
+
+        if (hasError) {
+            e.preventDefault();
+            alert('Please enter valid size values (e.g. 100%, 500px, 20rem)');
+        }
     });
 }); 
