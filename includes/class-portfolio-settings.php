@@ -17,7 +17,7 @@ class Portfolio_Settings {
             'global-carousel-position-title' => 'top-left',
             'global-carousel-position-description' => 'bottom',
             'global-carousel-width' => '100%',
-            'global-carousel-height' => '100%',
+            'global-carousel-height' => '500px',
             
             // Palette settings
             'global-palette-height-rectangle' => 15,

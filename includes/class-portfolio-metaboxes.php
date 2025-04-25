@@ -93,6 +93,7 @@ class Portfolio_Metaboxes {
         <div class="portfolio-carousel-container">
             <div class="carousel-images">
                 <h4><?php _e('Carousel Images', 'portfolio-showcase'); ?></h4>
+                <p class="description"><?php _e('Ajoutez et organisez les images de votre carrousel. Vous pouvez ajouter un titre et une description pour chaque image.', 'portfolio-showcase'); ?></p>
                 <div id="carousel-image-list">
                     <?php
                     if (!empty($carousel_images)) {
@@ -111,8 +112,8 @@ class Portfolio_Metaboxes {
                                     </div>
                                     <input type="hidden" name="carousel_images[<?php echo $index; ?>][id]" value="<?php echo esc_attr($image['id']); ?>">
                                     <input type="hidden" name="carousel_images[<?php echo $index; ?>][url]" value="<?php echo esc_attr($image['url']); ?>">
-                                    <button title="Supprimer l'image" type="button" class="remove-image">×</button>
-                                    <span title="Déplacer l'image" class="move-handle">⋮⋮</span>
+                                    <button title="<?php esc_attr_e('Supprimer l\'image', 'portfolio-showcase'); ?>" type="button" class="remove-image">×</button>
+                                    <span title="<?php esc_attr_e('Déplacer l\'image', 'portfolio-showcase'); ?>" class="move-handle">⋮⋮</span>
                                 </div>
                                 <?php
                             }
@@ -127,111 +128,164 @@ class Portfolio_Metaboxes {
 
             <div class="carousel-settings">
                 <h4><?php _e('Carousel Settings', 'portfolio-showcase'); ?></h4>
+                <p class="description"><?php _e('Configurez l\'apparence et le comportement de votre carrousel.', 'portfolio-showcase'); ?></p>
                 
-                <div class="portfolio-showcase-field">
-                    <label for="carousel_settings[local-carousel-width]"><?php _e('Carousel Width', 'portfolio-showcase'); ?></label>
-                    <input type="text" 
-                           name="carousel_settings[local-carousel-width]" 
-                           id="carousel_settings[local-carousel-width]"
-                           value="<?php echo esc_attr($settings['local-carousel-width']); ?>"
-                           class="portfolio-showcase-size-field"
-                           placeholder="e.g. 100%, 500px, 20rem">
-                    <p class="description"><?php _e('Enter a valid CSS size value (e.g. 100%, 500px, 20rem)', 'portfolio-showcase'); ?></p>
+                <div class="settings-group">
+                    <h5><?php _e('Dimensions', 'portfolio-showcase'); ?></h5>
+                    <div class="portfolio-showcase-field">
+                        <label for="carousel_settings[local-carousel-width]">
+                            <?php _e('Carousel Width', 'portfolio-showcase'); ?>
+                            <span class="help-tip" title="<?php esc_attr_e('Définissez la largeur du carrousel. Utilisez des valeurs CSS comme %, px, rem, etc.', 'portfolio-showcase'); ?>">?</span>
+                        </label>
+                        <input type="text" 
+                               name="carousel_settings[local-carousel-width]" 
+                               id="carousel_settings[local-carousel-width]"
+                               value="<?php echo esc_attr($settings['local-carousel-width']); ?>"
+                               class="portfolio-showcase-size-field"
+                               placeholder="e.g. 100%, 500px, 20rem">
+                        <p class="description"><?php _e('Enter a valid CSS size value (e.g. 100%, 500px, 20rem)', 'portfolio-showcase'); ?></p>
+                    </div>
+
+                    <div class="portfolio-showcase-field">
+                        <label for="carousel_settings[local-carousel-height]">
+                            <?php _e('Carousel Height', 'portfolio-showcase'); ?>
+                            <span class="help-tip" title="<?php esc_attr_e('Définissez la hauteur du carrousel. Utilisez des valeurs CSS comme %, px, rem, etc.', 'portfolio-showcase'); ?>">?</span>
+                        </label>
+                        <input type="text" 
+                               name="carousel_settings[local-carousel-height]" 
+                               id="carousel_settings[local-carousel-height]"
+                               value="<?php echo esc_attr($settings['local-carousel-height']); ?>"
+                               class="portfolio-showcase-size-field"
+                               placeholder="e.g. 100%, 500px, 20rem">
+                        <p class="description"><?php _e('Enter a valid CSS size value (e.g. 100%, 500px, 20rem)', 'portfolio-showcase'); ?></p>
+                    </div>
                 </div>
 
-                <div class="portfolio-showcase-field">
-                    <label for="carousel_settings[local-carousel-height]"><?php _e('Carousel Height', 'portfolio-showcase'); ?></label>
-                    <input type="text" 
-                           name="carousel_settings[local-carousel-height]" 
-                           id="carousel_settings[local-carousel-height]"
-                           value="<?php echo esc_attr($settings['local-carousel-height']); ?>"
-                           class="portfolio-showcase-size-field"
-                           placeholder="e.g. 100%, 500px, 20rem">
-                    <p class="description"><?php _e('Enter a valid CSS size value (e.g. 100%, 500px, 20rem)', 'portfolio-showcase'); ?></p>
+                <div class="settings-group">
+                    <h5><?php _e('Mode Plein Écran', 'portfolio-showcase'); ?></h5>
+                    <p>
+                        <label>
+                            <input type="checkbox" name="carousel_settings[local-carousel-enable-fullscreen]" 
+                                   <?php checked($settings['local-carousel-enable-fullscreen'], true); ?>>
+                            <?php _e('Enable Fullscreen Mode', 'portfolio-showcase'); ?>
+                            <span class="help-tip" title="<?php esc_attr_e('Activez le mode plein écran pour permettre aux visiteurs d\'afficher les images en plein écran.', 'portfolio-showcase'); ?>">?</span>
+                        </label>
+                    </p>
+
+                    <div class="portfolio-showcase-field">
+                        <label for="carousel_settings[local-carousel-color-background-fullscreen]">
+                            <?php _e('Couleur de fond', 'portfolio-showcase'); ?>
+                            <span class="help-tip" title="<?php esc_attr_e('Choisissez la couleur de fond en mode plein écran.', 'portfolio-showcase'); ?>">?</span>
+                        </label>
+                        <input type="color" name="carousel_settings[local-carousel-color-background-fullscreen]" 
+                               id="carousel_settings[local-carousel-color-background-fullscreen]" 
+                               value="<?php echo esc_attr($settings['local-carousel-color-background-fullscreen'] ?? '#000000'); ?>" />
+                    </div>
+
+                    <div class="portfolio-showcase-field">
+                        <label>
+                            <?php _e('Fullscreen Background Opacity:', 'portfolio-showcase'); ?>
+                            <span class="help-tip" title="<?php esc_attr_e('Ajustez l\'opacité du fond en mode plein écran.', 'portfolio-showcase'); ?>">?</span>
+                        </label>
+                        <input type="range" name="carousel_settings[local-carousel-opacity-background-fullscreen]" 
+                               min="0" max="100" value="<?php echo esc_attr(isset($settings['local-carousel-opacity-background-fullscreen']) ? $settings['local-carousel-opacity-background-fullscreen'] : 90); ?>">
+                        <span class="opacity-value"><?php echo esc_html(isset($settings['local-carousel-opacity-background-fullscreen']) ? $settings['local-carousel-opacity-background-fullscreen'] : 90); ?>%</span>
+                    </div>
                 </div>
 
-                <p>
-                    <label>
-                        <input type="checkbox" name="carousel_settings[local-carousel-enable-fullscreen]" 
-                               <?php checked($settings['local-carousel-enable-fullscreen'], true); ?>>
-                        <?php _e('Enable Fullscreen Mode', 'portfolio-showcase'); ?>
-                    </label>
-                </p>
+                <div class="settings-group">
+                    <h5><?php _e('Positionnement', 'portfolio-showcase'); ?></h5>
+                    <div class="portfolio-showcase-field">
+                        <label for="carousel_settings[local-carousel-position-description]">
+                            <?php _e('Position de la description', 'portfolio-showcase'); ?>
+                            <span class="help-tip" title="<?php esc_attr_e('Choisissez où afficher la description des images.', 'portfolio-showcase'); ?>">?</span>
+                        </label>
+                        <select name="carousel_settings[local-carousel-position-description]" id="carousel_settings[local-carousel-position-description]">
+                            <option value="top" <?php selected($settings['local-carousel-position-description'], 'top'); ?>><?php _e('Haut', 'portfolio-showcase'); ?></option>
+                            <option value="bottom" <?php selected($settings['local-carousel-position-description'], 'bottom'); ?>><?php _e('Bas', 'portfolio-showcase'); ?></option>
+                        </select>
+                    </div>
 
-                <div class="portfolio-showcase-field">
-                    <label for="carousel_settings[local-carousel-position-description]"><?php _e('Position de la description', 'portfolio-showcase'); ?></label>
-                    <select name="carousel_settings[local-carousel-position-description]" id="carousel_settings[local-carousel-position-description]">
-                        <option value="top" <?php selected($settings['local-carousel-position-description'], 'top'); ?>><?php _e('Haut', 'portfolio-showcase'); ?></option>
-                        <option value="bottom" <?php selected($settings['local-carousel-position-description'], 'bottom'); ?>><?php _e('Bas', 'portfolio-showcase'); ?></option>
-                    </select>
+                    <div class="portfolio-showcase-field">
+                        <label>
+                            <?php _e('Title Position:', 'portfolio-showcase'); ?>
+                            <span class="help-tip" title="<?php esc_attr_e('Choisissez où afficher le titre des images.', 'portfolio-showcase'); ?>">?</span>
+                        </label>
+                        <select name="carousel_settings[local-carousel-position-title]">
+                            <option value="top-left" <?php selected($settings['local-carousel-position-title'], 'top-left'); ?>>
+                                <?php _e('Top Left', 'portfolio-showcase'); ?>
+                            </option>
+                            <option value="top-right" <?php selected($settings['local-carousel-position-title'], 'top-right'); ?>>
+                                <?php _e('Top Right', 'portfolio-showcase'); ?>
+                            </option>
+                            <option value="top-center" <?php selected($settings['local-carousel-position-title'], 'top-center'); ?>>
+                                <?php _e('top Center', 'portfolio-showcase'); ?>
+                            </option>
+                            <option value="bottom-left" <?php selected($settings['local-carousel-position-title'], 'bottom-left'); ?>>
+                                <?php _e('Bottom Left', 'portfolio-showcase'); ?>
+                            </option>
+                            <option value="bottom-center" <?php selected($settings['local-carousel-position-title'], 'bottom-center'); ?>>
+                                <?php _e('Bottom Center', 'portfolio-showcase'); ?>
+                            </option>
+                            <option value="bottom-right" <?php selected($settings['local-carousel-position-title'], 'bottom-right'); ?>>
+                                <?php _e('Bottom Right', 'portfolio-showcase'); ?>
+                            </option>
+                            <option value="center" <?php selected($settings['local-carousel-position-title'], 'center'); ?>>
+                                <?php _e('Center', 'portfolio-showcase'); ?>
+                            </option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="portfolio-showcase-field">
-                    <label for="carousel_settings[local-carousel-color-description-fullscreen]"><?php _e('Couleur du texte de la description (mode plein écran)', 'portfolio-showcase'); ?></label>
-                    <input type="color" name="carousel_settings[local-carousel-color-description-fullscreen]" id="carousel_settings[local-carousel-color-description-fullscreen]" value="<?php echo esc_attr($settings['local-carousel-color-description-fullscreen'] ?? '#ffffff'); ?>" />
+                <div class="settings-group">
+                    <h5><?php _e('Couleurs', 'portfolio-showcase'); ?></h5>
+                    <div class="portfolio-showcase-field">
+                        <label for="carousel_settings[local-carousel-color-background]">
+                            <?php _e('Normal Mode Background Color:', 'portfolio-showcase'); ?>
+                            <span class="help-tip" title="<?php esc_attr_e('Choisissez la couleur de fond en mode normal.', 'portfolio-showcase'); ?>">?</span>
+                        </label>
+                        <input type="color" name="carousel_settings[local-carousel-color-background]" 
+                               value="<?php echo esc_attr(isset($settings['local-carousel-color-background']) ? $settings['local-carousel-color-background'] : '#f5f5f5'); ?>">
+                    </div>
+
+                    <div class="portfolio-showcase-field">
+                        <label for="carousel_settings[local-carousel-color-title]">
+                            <?php _e('Title Text Color:', 'portfolio-showcase'); ?>
+                            <span class="help-tip" title="<?php esc_attr_e('Choisissez la couleur du texte des titres.', 'portfolio-showcase'); ?>">?</span>
+                        </label>
+                        <input type="color" name="carousel_settings[local-carousel-color-title]" 
+                               value="<?php echo esc_attr(isset($settings['local-carousel-color-title']) ? $settings['local-carousel-color-title'] : '#f5f5f5'); ?>">
+                    </div>
+
+                    <div class="portfolio-showcase-field">
+                        <label for="carousel_settings[local-carousel-color-description]">
+                            <?php _e('Description Text Color:', 'portfolio-showcase'); ?>
+                            <span class="help-tip" title="<?php esc_attr_e('Choisissez la couleur du texte des descriptions.', 'portfolio-showcase'); ?>">?</span>
+                        </label>
+                        <input type="color" name="carousel_settings[local-carousel-color-description]" 
+                               value="<?php echo esc_attr(isset($settings['local-carousel-color-description']) ? $settings['local-carousel-color-description'] : '#2e3d38'); ?>">
+                    </div>
+
+                    <div class="portfolio-showcase-field">
+                        <label for="carousel_settings[local-carousel-color-description-fullscreen]">
+                            <?php _e('Couleur du texte de la description (mode plein écran)', 'portfolio-showcase'); ?>
+                            <span class="help-tip" title="<?php esc_attr_e('Choisissez la couleur du texte des descriptions en mode plein écran.', 'portfolio-showcase'); ?>">?</span>
+                        </label>
+                        <input type="color" name="carousel_settings[local-carousel-color-description-fullscreen]" 
+                               id="carousel_settings[local-carousel-color-description-fullscreen]" 
+                               value="<?php echo esc_attr($settings['local-carousel-color-description-fullscreen'] ?? '#ffffff'); ?>" />
+                    </div>
+
+                    <div class="portfolio-showcase-field">
+                        <label for="carousel_settings[local-carousel-color-title-fullscreen]">
+                            <?php _e('Couleur du texte du titre (mode plein écran)', 'portfolio-showcase'); ?>
+                            <span class="help-tip" title="<?php esc_attr_e('Choisissez la couleur du texte des titres en mode plein écran.', 'portfolio-showcase'); ?>">?</span>
+                        </label>
+                        <input type="color" name="carousel_settings[local-carousel-color-title-fullscreen]" 
+                               id="carousel_settings[local-carousel-color-title-fullscreen]" 
+                               value="<?php echo esc_attr($settings['local-carousel-color-title-fullscreen'] ?? '#ffffff'); ?>" />
+                    </div>
                 </div>
-
-                <div class="portfolio-showcase-field">
-                    <label for="carousel_settings[local-carousel-color-title-fullscreen]"><?php _e('Couleur du texte du titre (mode plein écran)', 'portfolio-showcase'); ?></label>
-                    <input type="color" name="carousel_settings[local-carousel-color-title-fullscreen]" id="carousel_settings[local-carousel-color-title-fullscreen]" value="<?php echo esc_attr($settings['local-carousel-color-title-fullscreen'] ?? '#ffffff'); ?>" />
-                </div>
-
-                <p>
-                    <label><?php _e('Title Position:', 'portfolio-showcase'); ?></label>
-                    <select name="carousel_settings[local-carousel-position-title]">
-                        <option value="top-left" <?php selected($settings['local-carousel-position-title'], 'top-left'); ?>>
-                            <?php _e('Top Left', 'portfolio-showcase'); ?>
-                        </option>
-                        <option value="top-right" <?php selected($settings['local-carousel-position-title'], 'top-right'); ?>>
-                            <?php _e('Top Right', 'portfolio-showcase'); ?>
-                        </option>
-                        <option value="top-center" <?php selected($settings['local-carousel-position-title'], 'top-center'); ?>>
-                            <?php _e('top Center', 'portfolio-showcase'); ?>
-                        </option>
-                        <option value="bottom-left" <?php selected($settings['local-carousel-position-title'], 'bottom-left'); ?>>
-                            <?php _e('Bottom Left', 'portfolio-showcase'); ?>
-                        </option>
-                        <option value="bottom-center" <?php selected($settings['local-carousel-position-title'], 'bottom-center'); ?>>
-                            <?php _e('Bottom Center', 'portfolio-showcase'); ?>
-                        </option>
-                        <option value="bottom-right" <?php selected($settings['local-carousel-position-title'], 'bottom-right'); ?>>
-                            <?php _e('Bottom Right', 'portfolio-showcase'); ?>
-                        </option>
-                        <option value="center" <?php selected($settings['local-carousel-position-title'], 'center'); ?>>
-                            <?php _e('Center', 'portfolio-showcase'); ?>
-                        </option>
-                    </select>
-                </p>
-
-                <div class="portfolio-showcase-field">
-                    <label for="carousel_settings[local-carousel-color-background-fullscreen]"><?php _e('Couleur de fond', 'portfolio-showcase'); ?></label>
-                    <input type="color" name="carousel_settings[local-carousel-color-background-fullscreen]" id="carousel_settings[local-carousel-color-background-fullscreen]" value="<?php echo esc_attr($settings['local-carousel-color-background-fullscreen'] ?? '#000000'); ?>" />
-                </div>
-
-                <p>
-                    <label><?php _e('Normal Mode Background Color:', 'portfolio-showcase'); ?></label>
-                    <input type="color" name="carousel_settings[local-carousel-color-background]" 
-                           value="<?php echo esc_attr(isset($settings['local-carousel-color-background']) ? $settings['local-carousel-color-background'] : '#f5f5f5'); ?>">
-                </p>
-
-                <p>
-                    <label><?php _e('Title Text Color:', 'portfolio-showcase'); ?></label>
-                    <input type="color" name="carousel_settings[local-carousel-color-title]" 
-                           value="<?php echo esc_attr(isset($settings['local-carousel-color-title']) ? $settings['local-carousel-color-title'] : '#f5f5f5'); ?>">
-                </p>
-
-                <p>
-                    <label><?php _e('Description Text Color:', 'portfolio-showcase'); ?></label>
-                    <input type="color" name="carousel_settings[local-carousel-color-description]" 
-                           value="<?php echo esc_attr(isset($settings['local-carousel-color-description']) ? $settings['local-carousel-color-description'] : '#2e3d38'); ?>">
-                </p>
-
-                <p>
-                    <label><?php _e('Fullscreen Background Opacity:', 'portfolio-showcase'); ?></label>
-                    <input type="range" name="carousel_settings[local-carousel-opacity-background-fullscreen]" 
-                           min="0" max="100" value="<?php echo esc_attr(isset($settings['local-carousel-opacity-background-fullscreen']) ? $settings['local-carousel-opacity-background-fullscreen'] : 90); ?>">
-                    <span class="opacity-value"><?php echo esc_html(isset($settings['local-carousel-opacity-background-fullscreen']) ? $settings['local-carousel-opacity-background-fullscreen'] : 90); ?>%</span>
-                </p>
             </div>
         </div>
         <?php

@@ -8,8 +8,33 @@ jQuery(document).ready(function($) {
         cursor: 'move',
         opacity: 0.8,
         placeholder: 'ui-sortable-placeholder',
+        handle: '.move-handle',
+        start: function(event, ui) {
+            ui.placeholder.height(ui.item.height());
+            ui.item.addClass('dragging');
+        },
+        stop: function(event, ui) {
+            ui.item.removeClass('dragging');
+            reindexImages();
+            // Annoncer le changement pour les lecteurs d'écran
+            const newPosition = ui.item.index() + 1;
+            const totalItems = $('#carousel-image-list .carousel-image-item').length;
+            announceToScreenReader(`Image déplacée à la position ${newPosition} sur ${totalItems}`);
+        },
         update: function(event, ui) {
             reindexImages();
+        }
+    }).disableSelection();
+    
+    // Améliorer l'accessibilité des poignées de déplacement
+    $('.move-handle').attr({
+        'role': 'button',
+        'aria-label': 'Déplacer l\'image',
+        'tabindex': '0'
+    }).on('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            $(this).closest('.carousel-image-item').trigger('mousedown');
         }
     });
     
@@ -44,10 +69,8 @@ jQuery(document).ready(function($) {
                 
                 // Créer l'élément HTML pour l'image
                 var imageItem = $('<div class="carousel-image-item" data-id="' + image.id + '">' +
-                    '<div class="image-actions">' +
                     '<span title="Déplacer l\'image" class="move-handle">⋮⋮</span>' +
                     '<button title="Supprimer l\'image" type="button" class="remove-image">×</button>' +
-                    '</div>' +
                     '<img src="' + image.url + '" alt="">' +
                     '<div class="image-details">' +
                     '<input type="text" name="carousel_images[' + currentIndex + '][title]" value="" placeholder="Image title">' +
@@ -65,19 +88,42 @@ jQuery(document).ready(function($) {
         carouselFrame.open();
     });
     
+    // Améliorer la suppression avec confirmation
     $(document).on('click', '.remove-image', function() {
-        $(this).closest('.carousel-image-item').remove();
-        // Réindexer les éléments restants
-        reindexImages();
+        const $item = $(this).closest('.carousel-image-item');
+        const imageTitle = $item.find('input[name^="carousel_images"][name$="[title]"]').val() || 'Image sans titre';
+        
+        if (confirm(`Êtes-vous sûr de vouloir supprimer "${imageTitle}" ?`)) {
+            $item.fadeOut(300, function() {
+                $(this).remove();
+                reindexImages();
+                announceToScreenReader('Image supprimée');
+            });
+        }
     });
     
-    // Fonction pour réindexer les images
+    // Fonction pour annoncer les changements aux lecteurs d'écran
+    function announceToScreenReader(message) {
+        const $announcement = $('<div class="screen-reader-text" aria-live="polite"></div>');
+        $('body').append($announcement);
+        $announcement.text(message);
+        setTimeout(function() {
+            $announcement.remove();
+        }, 1000);
+    }
+    
+    // Fonction optimisée pour réindexer les images
     function reindexImages() {
-        $('#carousel-image-list .carousel-image-item').each(function(index) {
-            $(this).find('input[name^="carousel_images"][name$="[title]"]').attr('name', 'carousel_images[' + index + '][title]');
-            $(this).find('textarea[name^="carousel_images"][name$="[description]"]').attr('name', 'carousel_images[' + index + '][description]');
-            $(this).find('input[name^="carousel_images"][name$="[id]"]').attr('name', 'carousel_images[' + index + '][id]');
-            $(this).find('input[name^="carousel_images"][name$="[url]"]').attr('name', 'carousel_images[' + index + '][url]');
+        const $items = $('#carousel-image-list .carousel-image-item');
+        const fields = ['title', 'description', 'id', 'url'];
+        
+        $items.each(function(index) {
+            const $item = $(this);
+            fields.forEach(field => {
+                $item.find(`input[name^="carousel_images"][name$="[${field}]"], 
+                          textarea[name^="carousel_images"][name$="[${field}]"]`)
+                    .attr('name', `carousel_images[${index}][${field}]`);
+            });
         });
     }
     

@@ -1,42 +1,82 @@
-/* Portfolio Showcase Admin Styles */
+/* ==========================================================================
+   Portfolio Showcase - Styles de l'interface d'administration
+   ========================================================================== */
 
-/* Common */
+/* --------------------------------------------------------------------------
+   Variables et styles de base
+   -------------------------------------------------------------------------- */
+:root {
+    --primary-color: #2271b1;
+    --error-color: #dc3232;
+    --border-color: #ddd;
+    --background-color: #fff;
+    --text-color: #1d2327;
+    --hover-color: #135e96;
+}
+
+/* --------------------------------------------------------------------------
+   Conteneurs principaux
+   -------------------------------------------------------------------------- */
 .portfolio-showcase-admin {
     margin: 15px 0;
 }
 
-/* Carousel Images */
-.portfolio-carousel-container {
-    background: #fff;
+.portfolio-carousel-container,
+.portfolio-color-palette-container {
+    background: var(--background-color);
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     margin: 15px 0;
 }
 
+/* --------------------------------------------------------------------------
+   Gestion des images du carousel
+   -------------------------------------------------------------------------- */
 .carousel-images {
     margin-bottom: 20px;
 }
 
 #carousel-image-list {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 10px;
-    min-height: 50px;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    min-height: 100px;
     position: relative;
 }
 
 .carousel-image-item {
-    position: relative;
-    width: 150px;
     margin-bottom: 10px;
-    background: #fff;
-    border: 1px solid #ddd;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     padding: 5px;
-    transition: all 0.2s ease;
-    z-index: 1;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.carousel-image-item img {
+    width: 100px;
+    height: auto;
+    display: block;
+    border: 1px solid var(--border-color);
+}
+
+/* --------------------------------------------------------------------------
+   Drag and Drop
+   -------------------------------------------------------------------------- */
+.carousel-image-item.dragging {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.ui-sortable-placeholder {
+    background: rgba(0, 0, 0, 0.1);
+    border: 2px dashed #999;
+    visibility: visible !important;
 }
 
 .carousel-image-item.ui-sortable-helper {
@@ -47,7 +87,7 @@
 }
 
 .carousel-image-item.ui-sortable-placeholder {
-    border: 2px dashed #ddd;
+    border: 2px dashed var(--border-color);
     background: #f9f9f9;
     visibility: visible !important;
     margin: 0;
@@ -55,19 +95,25 @@
     width: 150px;
 }
 
-.carousel-image-item.ui-sortable-helper img {
-    pointer-events: none;
+/* --------------------------------------------------------------------------
+   Contrôles d'image
+   -------------------------------------------------------------------------- */
+.image-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
-.carousel-image-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border: 1px solid #ddd;
+.carousel-image-item:hover .image-actions {
+    opacity: 1;
 }
 
-.carousel-image-item .move-handle,
-.carousel-image-item .remove-image {
+.move-handle,
+.remove-image {
     position: absolute;
     z-index: 1;
     background: none;
@@ -82,104 +128,49 @@
     scale: 1;
 }
 
-.carousel-image-item .remove-image {
-    right: 10px;
-    top: 0px;
-    color: #c71627;
-}
-
-.carousel-image-item .remove-image:hover {
-    color:#dc3545;
-    scale: 1.25;
-}
-
-.carousel-image-item .move-handle {
+.move-handle {
     left: 10px;
     top: 5px;
     color: #4b4a4a;
 }
 
-.carousel-image-item .move-handle:hover {
-    color: #666666;
+.move-handle:hover {
+    color: var(--primary-color);
+    scale: 1.2;
+}
+
+.remove-image {
+    right: 10px;
+    top: 0px;
+    color: #c71627;
+}
+
+.remove-image:hover {
+    color: var(--error-color);
     scale: 1.25;
 }
 
-.carousel-image-item .image-details {
+/* --------------------------------------------------------------------------
+   Détails de l'image
+   -------------------------------------------------------------------------- */
+.image-details {
     margin-top: 5px;
 }
 
-.carousel-image-item .image-details input[type="text"] {
+.image-details input[type="text"] {
     width: 100%;
     margin-bottom: 5px;
 }
 
-.carousel-image-item .image-details textarea {
+.image-details textarea {
     width: 100%;
     height: 60px;
     resize: vertical;
 }
 
-.carousel-image-preview {
-    position: relative;
-    margin-bottom: 10px;
-}
-
-.carousel-image-preview img {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-}
-
-.carousel-image-actions {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    display: flex;
-    gap: 5px;
-}
-
-.carousel-image-actions button {
-    padding: 5px;
-    background: rgba(255,255,255,0.9);
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.carousel-image-actions button:hover {
-    background: #fff;
-}
-
-.carousel-image-fields {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.carousel-image-fields input,
-.carousel-image-fields textarea {
-    width: 100%;
-}
-
-.carousel-settings {
-    background: #f9f9f9;
-    padding: 15px;
-    border: 1px solid #ddd;
-}
-
-.carousel-settings p {
-    margin-bottom: 10px;
-}
-
-/* Color Palette */
-.portfolio-color-palette-container {
-    background: #fff;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin: 15px 0;
-}
-
+/* --------------------------------------------------------------------------
+   Palette de couleurs
+   -------------------------------------------------------------------------- */
 .color-list {
     margin-bottom: 20px;
 }
@@ -203,14 +194,14 @@
     width: 50px;
     height: 30px;
     padding: 0;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
 }
 
 .color-item input[type="text"] {
     width: 200px;
 }
 
-.color-item .remove-color {
+.remove-color {
     line-height: 1;
     position: absolute;
     top: 0;
@@ -223,23 +214,29 @@
     cursor: pointer;
     text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
     transition: all 0.2s ease;
+    border: none;
+    background: none;
 }
 
-.color-item .remove-color:hover {
-    color: #dc3545;
+.remove-color:hover {
+    color: var(--error-color);
 }
 
+/* --------------------------------------------------------------------------
+   Paramètres et options
+   -------------------------------------------------------------------------- */
+.carousel-settings,
 .palette-settings {
     background: #f9f9f9;
     padding: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
 }
 
+.carousel-settings p,
 .palette-settings p {
     margin-bottom: 10px;
 }
 
-/* Style Options */
 .portfolio-style-options {
     display: flex;
     flex-direction: column;
@@ -256,24 +253,15 @@
     font-weight: bold;
 }
 
-.portfolio-style-options input[type="text"],
-.portfolio-style-options textarea {
-    width: 100%;
-}
-
-.portfolio-style-options textarea {
-    width: 100%;
-    min-height: 100px;
-    resize: vertical;
-}
-
-/* Buttons */
+/* --------------------------------------------------------------------------
+   Boutons et contrôles
+   -------------------------------------------------------------------------- */
 .add-item-button {
     display: inline-flex;
     align-items: center;
     gap: 5px;
     padding: 8px 16px;
-    background: #2271b1;
+    background: var(--primary-color);
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -282,15 +270,57 @@
 }
 
 .add-item-button:hover {
-    background: #135e96;
+    background: var(--hover-color);
 }
 
 .add-item-button:focus {
-    box-shadow: 0 0 0 1px #fff, 0 0 0 3px #2271b1;
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--primary-color);
     outline: none;
 }
 
-/* Responsive Design */
+#add-carousel-images,
+#add-color {
+    margin-top: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   Accessibilité
+   -------------------------------------------------------------------------- */
+.screen-reader-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.carousel-image-item:focus-within {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Validation des champs
+   -------------------------------------------------------------------------- */
+.portfolio-showcase-size-field.error {
+    border-color: var(--error-color);
+    box-shadow: 0 0 2px rgba(220, 50, 50, 0.8);
+}
+
+.portfolio-showcase-size-field.error + .description {
+    color: var(--error-color);
+}
+
+.portfolio-showcase-size-field.error + .description.error {
+    font-weight: bold;
+}
+
+/* --------------------------------------------------------------------------
+   Design Responsive
+   -------------------------------------------------------------------------- */
 @media screen and (max-width: 782px) {
     .carousel-settings {
         grid-template-columns: 1fr;
@@ -302,9 +332,194 @@
     }
 }
 
-#add-carousel-images,
-#add-color {
-    margin-top: 10px;
+/* Conteneur principal */
+.portfolio-carousel-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+/* Section des images */
+.carousel-images h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #1d2327;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.carousel-image-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f6f7f7;
+    border-radius: 4px;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.carousel-image-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.image-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.image-details input,
+.image-details textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.image-details textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+.remove-image:hover {
+    color: #dc3232;
+}
+
+/* Section des paramètres */
+.carousel-settings {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-settings h4 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #1d2327;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.portfolio-showcase-field {
+    margin-bottom: 1.5rem;
+}
+
+.portfolio-showcase-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.portfolio-showcase-field input[type="text"],
+.portfolio-showcase-field input[type="color"],
+.portfolio-showcase-field select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.portfolio-showcase-field input[type="color"] {
+    height: 40px;
+    padding: 0.2rem;
+}
+
+.portfolio-showcase-field .description {
+    margin-top: 0.5rem;
+    color: #666;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+/* Contrôle d'opacité */
+input[type="range"] {
+    width: 100%;
+    margin: 0.5rem 0;
+}
+
+.opacity-value {
+    display: inline-block;
+    margin-left: 1rem;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+/* Boutons */
+#add-carousel-images {
+    margin-top: 1rem;
+}
+
+/* Responsive */
+@media screen and (min-width: 782px) {
+
+    .carousel-images {
+        flex: 1;
+    }
+    
+    .carousel-settings {
+        flex: 1;
+    }
+}
+
+/* Améliorations visuelles */
+.portfolio-showcase-field input:focus,
+.portfolio-showcase-field select:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: none;
+}
+
+.portfolio-showcase-field input[type="color"]:hover {
+    cursor: pointer;
+}
+
+/* Aide contextuelle */
+.help-tip {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 0.5rem;
+    background: #2271b1;
+    color: #fff;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: help;
+}
+
+/* Groupes de paramètres */
+.settings-group {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.settings-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.settings-group h5 {
+    margin: 0 0 1rem;
+    color: #1d2327;
+    font-size: 1em;
+    font-weight: 600;
 }
 
 /* Content Blocks Styles */
@@ -383,16 +598,3 @@
     margin-top: 10px;
 }
 
-/* Size Field Validation */
-.portfolio-showcase-size-field.error {
-    border-color: #dc3232;
-    box-shadow: 0 0 2px rgba(220, 50, 50, 0.8);
-}
-
-.portfolio-showcase-size-field.error + .description {
-    color: #dc3232;
-}
-
-.portfolio-showcase-size-field.error + .description.error {
-    font-weight: bold;
-} 

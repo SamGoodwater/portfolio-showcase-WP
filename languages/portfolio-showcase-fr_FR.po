@@ -1,17 +1,20 @@
+# Copyright (C) 2023 Portfolio Showcase
+# This file is distributed under the same license as the Portfolio Showcase package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Portfolio Showcase\n"
-"POT-Creation-Date: 2023-04-14 12:00+0200\n"
-"PO-Revision-Date: 2023-04-14 12:00+0200\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: fr_FR\n"
+"Project-Id-Version: Portfolio Showcase 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/portfolio-showcase\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0\n"
+"POT-Creation-Date: 2023-04-25 12:00+0200\n"
+"PO-Revision-Date: 2023-04-25 12:00+0200\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: portfolio-showcase\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_FR\n"
 
 #: includes/class-portfolio-post-type.php:13
 msgid "Portfolio Projects"
@@ -101,10 +104,6 @@ msgstr "Supprimer l'image du projet"
 msgid "Use as project image"
 msgstr "Utiliser comme image du projet"
 
-#: includes/class-portfolio-post-type.php:38
-msgid "Portfolio Project"
-msgstr "Projet de Portfolio"
-
 #: includes/class-portfolio-metaboxes.php:19
 msgid "Project Carousel"
 msgstr "Carrousel du Projet"
@@ -157,13 +156,141 @@ msgstr "ex: 10px ou 10px 20px"
 msgid ".portfolio-item { /* your css */ }"
 msgstr ".portfolio-item { /* votre css */ }"
 
+#: includes/class-portfolio-metaboxes.php:281
+msgid "Fullscreen Mode"
+msgstr "Mode Plein Écran"
+
+#: includes/class-portfolio-metaboxes.php:282
+msgid "Fullscreen width"
+msgstr "Largeur plein écran"
+
+#: includes/class-portfolio-metaboxes.php:283
+msgid "Fullscreen height"
+msgstr "Hauteur plein écran"
+
+#: includes/class-portfolio-metaboxes.php:284
+msgid "Image container height"
+msgstr "Hauteur du conteneur d'images"
+
+#: includes/class-portfolio-metaboxes.php:285
+msgid "Active slide width"
+msgstr "Largeur du slide actif"
+
+#: includes/class-portfolio-metaboxes.php:286
+msgid "Thumbnail size"
+msgstr "Taille des miniatures"
+
+#: includes/class-portfolio-metaboxes.php:287
+msgid "Default thumbnail size"
+msgstr "Taille par défaut des miniatures"
+
+#: includes/class-portfolio-metaboxes.php:288
+msgid "Mobile thumbnail size (≤768px)"
+msgstr "Taille des miniatures mobile (≤768px)"
+
+#: includes/class-portfolio-metaboxes.php:289
+msgid "Small mobile thumbnail size (≤480px)"
+msgstr "Taille des miniatures petit mobile (≤480px)"
+
+#: includes/class-portfolio-metaboxes.php:290
+msgid "Carousel Settings"
+msgstr "Paramètres du Carrousel"
+
+#: includes/class-portfolio-metaboxes.php:291
+msgid "Carousel Width"
+msgstr "Largeur du Carrousel"
+
+#: includes/class-portfolio-metaboxes.php:292
+msgid "Enter a valid CSS size value (e.g. 100%, 500px, 20rem)"
+msgstr "Entrez une valeur de taille CSS valide (ex: 100%, 500px, 20rem)"
+
+#: includes/class-portfolio-metaboxes.php:293
+msgid "Carousel Height"
+msgstr "Hauteur du Carrousel"
+
+#: includes/class-portfolio-metaboxes.php:294
+msgid "Enable Fullscreen Mode"
+msgstr "Activer le Mode Plein Écran"
+
+#: includes/class-portfolio-metaboxes.php:295
+msgid "Position de la description"
+msgstr "Position de la description"
+
+#: includes/class-portfolio-metaboxes.php:296
+msgid "Haut"
+msgstr "Haut"
+
+#: includes/class-portfolio-metaboxes.php:297
+msgid "Bas"
+msgstr "Bas"
+
+#: includes/class-portfolio-metaboxes.php:298
+msgid "Couleur du texte de la description (mode plein écran)"
+msgstr "Couleur du texte de la description (mode plein écran)"
+
+#: includes/class-portfolio-metaboxes.php:299
+msgid "Couleur du texte du titre (mode plein écran)"
+msgstr "Couleur du texte du titre (mode plein écran)"
+
+#: includes/class-portfolio-metaboxes.php:300
+msgid "Title Position:"
+msgstr "Position du Titre :"
+
+#: includes/class-portfolio-metaboxes.php:301
+msgid "Top Left"
+msgstr "Haut Gauche"
+
+#: includes/class-portfolio-metaboxes.php:302
+msgid "Top Right"
+msgstr "Haut Droite"
+
+#: includes/class-portfolio-metaboxes.php:303
+msgid "top Center"
+msgstr "Haut Centre"
+
+#: includes/class-portfolio-metaboxes.php:304
+msgid "Bottom Left"
+msgstr "Bas Gauche"
+
+#: includes/class-portfolio-metaboxes.php:305
+msgid "Bottom Center"
+msgstr "Bas Centre"
+
+#: includes/class-portfolio-metaboxes.php:306
+msgid "Bottom Right"
+msgstr "Bas Droite"
+
+#: includes/class-portfolio-metaboxes.php:307
+msgid "Center"
+msgstr "Centre"
+
+#: includes/class-portfolio-metaboxes.php:308
+msgid "Couleur de fond"
+msgstr "Couleur de fond"
+
+#: includes/class-portfolio-metaboxes.php:309
+msgid "Normal Mode Background Color:"
+msgstr "Couleur de fond en mode normal :"
+
+#: includes/class-portfolio-metaboxes.php:310
+msgid "Title Text Color:"
+msgstr "Couleur du texte du titre :"
+
+#: includes/class-portfolio-metaboxes.php:311
+msgid "Description Text Color:"
+msgstr "Couleur du texte de la description :"
+
+#: includes/class-portfolio-metaboxes.php:312
+msgid "Fullscreen Background Opacity:"
+msgstr "Opacité du fond en mode plein écran :"
+
 #: assets/js/portfolio-showcase-admin.js:12
 msgid "Select Carousel Images"
-msgstr "Sélectionner les Images du Carrousel"
+msgstr "Sélectionner les images du carrousel"
 
 #: assets/js/portfolio-showcase-admin.js:14
 msgid "Add to Carousel"
-msgstr "Ajouter au Carrousel"
+msgstr "Ajouter au carrousel"
 
 #: assets/js/portfolio-showcase-admin.js:31
 msgid "Image title"
@@ -175,4 +302,68 @@ msgstr "Description de l'image"
 
 #: assets/js/portfolio-showcase-admin.js:77
 msgid "Color comment"
-msgstr "Commentaire de couleur" 
+msgstr "Commentaire de couleur"
+
+#: assets/js/portfolio-showcase-admin.js:140
+msgid "Color comment"
+msgstr "Commentaire de couleur"
+
+#: assets/js/portfolio-showcase-admin.js:230
+msgid "Please enter valid size values (e.g. 100%, 500px, 20rem)"
+msgstr "Veuillez entrer des valeurs de taille valides (ex: 100%, 500px, 20rem)"
+
+#: includes/class-portfolio-metaboxes.php:120
+msgid "Add Images"
+msgstr "Ajouter des images"
+
+#: includes/class-portfolio-metaboxes.php:123
+msgid "Carousel Settings"
+msgstr "Paramètres du carrousel"
+
+#: includes/class-portfolio-metaboxes.php:140
+msgid "Enter a valid CSS size value (e.g. 100%, 500px, 20rem)"
+msgstr "Entrez une valeur de taille CSS valide (ex: 100%, 500px, 20rem)"
+
+#: includes/class-portfolio-metaboxes.php:160
+msgid "Enable Fullscreen Mode"
+msgstr "Activer le mode plein écran"
+
+#: includes/class-portfolio-metaboxes.php:200
+msgid "Title Position:"
+msgstr "Position du titre :"
+
+#: includes/class-portfolio-metaboxes.php:202
+msgid "Top Left"
+msgstr "En haut à gauche"
+
+#: includes/class-portfolio-metaboxes.php:203
+msgid "Top Right"
+msgstr "En haut à droite"
+
+#: includes/class-portfolio-metaboxes.php:204
+msgid "Top Center"
+msgstr "En haut au centre"
+
+#: includes/class-portfolio-metaboxes.php:205
+msgid "Bottom Left"
+msgstr "En bas à gauche"
+
+#: includes/class-portfolio-metaboxes.php:206
+msgid "Bottom Center"
+msgstr "En bas au centre"
+
+#: includes/class-portfolio-metaboxes.php:207
+msgid "Bottom Right"
+msgstr "En bas à droite"
+
+#: includes/class-portfolio-metaboxes.php:208
+msgid "Center"
+msgstr "Centre"
+
+#: includes/class-portfolio-metaboxes.php:220
+msgid "Normal Mode Background Color:"
+msgstr "Couleur de fond en mode normal :"
+
+#: includes/class-portfolio-metaboxes.php:230
+msgid "Fullscreen Background Opacity:"
+msgstr "Opacité du fond en plein écran :" 

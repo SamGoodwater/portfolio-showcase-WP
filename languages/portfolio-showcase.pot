@@ -1,31 +1,33 @@
-# Copyright (C) 2023 Your Name
-# This file is distributed under the same license as the Portfolio Showcase plugin.
+# Copyright (C) 2023 Portfolio Showcase
+# This file is distributed under the same license as the Portfolio Showcase package.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Portfolio Showcase 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/portfolio-showcase\n"
-"POT-Creation-Date: 2023-04-14 12:00+0200\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/portfolio-"
+"showcase\n"
+"POT-Creation-Date: 2025-04-25 15:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Domain: portfolio-showcase\n"
 
 #: includes/class-portfolio-post-type.php:13
 msgid "Portfolio Projects"
 msgstr ""
 
 #: includes/class-portfolio-post-type.php:14
+#: includes/class-portfolio-post-type.php:16
+#: includes/class-portfolio-post-type.php:38
 msgid "Portfolio Project"
 msgstr ""
 
 #: includes/class-portfolio-post-type.php:15
 msgid "Portfolio"
-msgstr ""
-
-#: includes/class-portfolio-post-type.php:16
-msgid "Portfolio Project"
 msgstr ""
 
 #: includes/class-portfolio-post-type.php:17
@@ -100,10 +102,6 @@ msgstr ""
 msgid "Use as project image"
 msgstr ""
 
-#: includes/class-portfolio-post-type.php:38
-msgid "Portfolio Project"
-msgstr ""
-
 #: includes/class-portfolio-metaboxes.php:19
 msgid "Project Carousel"
 msgstr ""
@@ -125,29 +123,26 @@ msgid "Carousel Images"
 msgstr ""
 
 #: includes/class-portfolio-metaboxes.php:89
+#: assets/js/portfolio-showcase-admin.js:31
+#: assets/js/portfolio-showcase-admin.js:70
 msgid "Image title"
 msgstr ""
 
 #: includes/class-portfolio-metaboxes.php:91
+#: assets/js/portfolio-showcase-admin.js:32
+#: assets/js/portfolio-showcase-admin.js:71
 msgid "Image description"
 msgstr ""
 
 #: includes/class-portfolio-metaboxes.php:163
-msgid "Color comment"
-msgstr ""
-
 #: includes/class-portfolio-metaboxes.php:199
-msgid "Color comment"
-msgstr ""
-
 #: includes/class-portfolio-metaboxes.php:211
+#: assets/js/portfolio-showcase-admin.js:77
+#: assets/js/portfolio-showcase-admin.js:140
 msgid "Color comment"
 msgstr ""
 
 #: includes/class-portfolio-metaboxes.php:267
-msgid "e.g., 10px or 10px 20px"
-msgstr ""
-
 #: includes/class-portfolio-metaboxes.php:274
 msgid "e.g., 10px or 10px 20px"
 msgstr ""
@@ -156,22 +151,164 @@ msgstr ""
 msgid ".portfolio-item { /* your css */ }"
 msgstr ""
 
+#: includes/class-portfolio-metaboxes.php:281
+msgid "Fullscreen Mode"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:282
+msgid "Fullscreen width"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:283
+msgid "Fullscreen height"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:284
+msgid "Image container height"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:285
+msgid "Active slide width"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:286
+msgid "Thumbnail size"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:287
+msgid "Default thumbnail size"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:288
+msgid "Mobile thumbnail size (≤768px)"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:289
+msgid "Small mobile thumbnail size (≤480px)"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:290
+#: includes/class-portfolio-metaboxes.php:123
+msgid "Carousel Settings"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:291
+msgid "Carousel Width"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:292
+#: includes/class-portfolio-metaboxes.php:140
+msgid "Enter a valid CSS size value (e.g. 100%, 500px, 20rem)"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:293
+msgid "Carousel Height"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:294
+#: includes/class-portfolio-metaboxes.php:160
+msgid "Enable Fullscreen Mode"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:295
+msgid "Position de la description"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:296
+msgid "Haut"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:297
+msgid "Bas"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:298
+msgid "Couleur du texte de la description (mode plein écran)"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:299
+msgid "Couleur du texte du titre (mode plein écran)"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:300
+#: includes/class-portfolio-metaboxes.php:200
+msgid "Title Position:"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:301
+#: includes/class-portfolio-metaboxes.php:202
+msgid "Top Left"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:302
+#: includes/class-portfolio-metaboxes.php:203
+msgid "Top Right"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:303
+msgid "top Center"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:304
+#: includes/class-portfolio-metaboxes.php:205
+msgid "Bottom Left"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:305
+#: includes/class-portfolio-metaboxes.php:206
+msgid "Bottom Center"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:306
+#: includes/class-portfolio-metaboxes.php:207
+msgid "Bottom Right"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:307
+#: includes/class-portfolio-metaboxes.php:208
+msgid "Center"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:308
+msgid "Couleur de fond"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:309
+#: includes/class-portfolio-metaboxes.php:220
+msgid "Normal Mode Background Color:"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:310
+msgid "Title Text Color:"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:311
+msgid "Description Text Color:"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php:312
+#: includes/class-portfolio-metaboxes.php:230
+msgid "Fullscreen Background Opacity:"
+msgstr ""
+
 #: assets/js/portfolio-showcase-admin.js:12
+#: assets/js/portfolio-showcase-admin.js:45
 msgid "Select Carousel Images"
 msgstr ""
 
 #: assets/js/portfolio-showcase-admin.js:14
+#: assets/js/portfolio-showcase-admin.js:48
 msgid "Add to Carousel"
 msgstr ""
 
-#: assets/js/portfolio-showcase-admin.js:31
-msgid "Image title"
+#: assets/js/portfolio-showcase-admin.js:230
+msgid "Please enter valid size values (e.g. 100%, 500px, 20rem)"
 msgstr ""
 
-#: assets/js/portfolio-showcase-admin.js:32
-msgid "Image description"
+#: includes/class-portfolio-metaboxes.php:120
+msgid "Add Images"
 msgstr ""
 
-#: assets/js/portfolio-showcase-admin.js:77
-msgid "Color comment"
-msgstr "" 
+#: includes/class-portfolio-metaboxes.php:204
+msgid "Top Center"
+msgstr ""

@@ -597,7 +597,7 @@ jQuery(document).ready(function($) {
             const height = getSettingsValue(
                 this.settings,
                 'local-carousel-height',
-                '100%'
+                '500px'
             );
             
             applyStyle(this.element, null, 'width', width);

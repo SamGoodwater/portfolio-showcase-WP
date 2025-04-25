@@ -32,9 +32,16 @@ L'extension est organisée en plusieurs dossiers principaux :
 
 ### 2. Carousel d'images avancé
 - **Navigation infinie** : Défilement circulaire entre les images
-- **Prévisualisations** : Affichage des images précédentes/suivantes avec effet de dégradé
-- **Mode plein écran** : Possibilité d'afficher les images en plein écran
-- **Navigation par miniatures** : Miniatures centrées pour accéder rapidement aux images
+- **Prévisualisations** : Affichage des images précédentes/suivantes avec effet de dégradé (20% de la largeur)
+- **Mode plein écran** : 
+  - Largeur : 100vw
+  - Hauteur : 100vh
+  - Conteneur d'images : 80% de la hauteur de l'écran
+  - Largeur des slides actifs : 90% de la largeur du conteneur
+- **Navigation par miniatures** : 
+  - Taille par défaut : 80px × 60px
+  - Taille mobile (≤768px) : 60px × 45px
+  - Taille mobile (≤480px) : 50px × 38px
 - **Navigation au clavier** : Utilisation des flèches et de la touche Échap
 - **Positions de texte personnalisables** : Titres et descriptions positionnables selon les préférences (haut-gauche, haut-droite, bas-gauche, bas-droite, centre)
 
