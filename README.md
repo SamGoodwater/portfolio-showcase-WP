@@ -8,7 +8,7 @@ Cette version est fonctionnelle mais n'a pas été testée sur un large éventai
 
 ## Téléchargement
 
-[Télécharger la version 1.0.0 Bêta](https://github.com/votre-nom/portfolio-showcase/releases/latest/download/portfolio-showcase.zip)
+[Télécharger la version 1.0.0 Bêta](https://github.com/SamGoodwater/portfolio-showcase-WP/blob/main/portfolio-showcase.zip)
 
 ## Compatibilité
 
