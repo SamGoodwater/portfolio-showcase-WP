@@ -312,3 +312,23 @@ msgstr ""
 #: includes/class-portfolio-metaboxes.php:204
 msgid "Top Center"
 msgstr ""
+
+#: includes/class-portfolio-settings.php
+msgid "Display this portfolio by default"
+msgstr ""
+
+#: includes/class-portfolio-settings.php
+msgid "Enable fullscreen opening for class <code>open-portfolio-{ID}</code>"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php
+msgid "Visibility"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php
+msgid "Afficher ce portfolio"
+msgstr ""
+
+#: includes/class-portfolio-metaboxes.php
+msgid "Activer l'ouverture en plein écran pour la classe"
+msgstr ""

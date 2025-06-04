@@ -366,4 +366,19 @@ msgstr "Couleur de fond en mode normal :"
 
 #: includes/class-portfolio-metaboxes.php:230
 msgid "Fullscreen Background Opacity:"
-msgstr "Opacité du fond en plein écran :" 
+msgstr "Opacité du fond en plein écran :"
+
+msgid "Display this portfolio by default"
+msgstr "Afficher ce portfolio"
+
+msgid "Enable fullscreen opening for class <code>open-portfolio-{ID}</code>"
+msgstr "Activer l'ouverture en plein écran pour la classe <code>open-portfolio-{ID}</code>"
+
+msgid "Visibility"
+msgstr "Visibilité"
+
+msgid "Afficher ce portfolio"
+msgstr "Afficher ce portfolio"
+
+msgid "Activer l'ouverture en plein écran pour la classe"
+msgstr "Activer l'ouverture en plein écran pour la classe" 

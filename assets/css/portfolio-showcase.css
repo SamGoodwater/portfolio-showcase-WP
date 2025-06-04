@@ -12,6 +12,10 @@
     font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
+.portfolio-showcase.portfolio-hidden {
+    display: none;
+}
+
 /* ==========================================================================
    Carousel - Structure principale
    ========================================================================== */

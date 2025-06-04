@@ -18,6 +18,8 @@ class Portfolio_Settings {
             'global-carousel-position-description' => 'bottom',
             'global-carousel-width' => '100%',
             'global-carousel-height' => '500px',
+            'global-carousel-visible' => true,
+            'global-carousel-enable-class-fullscreen' => false,
             
             // Palette settings
             'global-palette-height-rectangle' => 15,
@@ -73,6 +75,26 @@ class Portfolio_Settings {
     }
 
     private function add_carousel_fields() {
+        // Visibilité du portfolio
+        add_settings_field(
+            'global-carousel-visible',
+            __('Display this portfolio by default', 'portfolio-showcase'),
+            array($this, 'render_checkbox_field'),
+            'portfolio-showcase-settings',
+            'portfolio_showcase_carousel_settings',
+            array('field' => 'global-carousel-visible')
+        );
+
+        // Ouverture fullscreen par classe
+        add_settings_field(
+            'global-carousel-enable-class-fullscreen',
+            __('Enable fullscreen opening for class <code>open-portfolio-{ID}</code>', 'portfolio-showcase'),
+            array($this, 'render_checkbox_field'),
+            'portfolio-showcase-settings',
+            'portfolio_showcase_carousel_settings',
+            array('field' => 'global-carousel-enable-class-fullscreen')
+        );
+
         // Title Color
         add_settings_field(
             'global-carousel-color-title',
@@ -380,6 +402,10 @@ class Portfolio_Settings {
             $sanitized['global-carousel-height'] = $this->sanitize_size_value($input['global-carousel-height']);
         }
 
+        // Additional sanitization
+        $sanitized['global-carousel-visible'] = isset($input['global-carousel-visible']);
+        $sanitized['global-carousel-enable-class-fullscreen'] = isset($input['global-carousel-enable-class-fullscreen']);
+
         return $sanitized;
     }
 
@@ -411,7 +437,9 @@ class Portfolio_Settings {
             'local-carousel-color-description-fullscreen' => $settings['global-carousel-color-description-fullscreen'],
             'local-carousel-color-title-fullscreen' => $settings['global-carousel-color-title-fullscreen'],
             'local-carousel-width' => $settings['global-carousel-width'],
-            'local-carousel-height' => $settings['global-carousel-height']
+            'local-carousel-height' => $settings['global-carousel-height'],
+            'local-carousel-visible' => $settings['global-carousel-visible'],
+            'local-carousel-enable-class-fullscreen' => $settings['global-carousel-enable-class-fullscreen'],
         );
     }
 

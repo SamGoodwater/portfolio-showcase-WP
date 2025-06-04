@@ -17,6 +17,11 @@ Cette version est fonctionnelle mais n'a pas été testée sur un large éventai
 
 ## Fonctionnalités
 
+### Contrôle de la visibilité et ouverture plein écran par classe
+- Vous pouvez choisir d'afficher ou non chaque portfolio (option globale ou locale)
+- Vous pouvez activer l'ouverture du portfolio en plein écran via une classe CSS spécifique (option globale ou locale)
+- Si le portfolio est masqué, il peut tout de même être ouvert en plein écran via un déclencheur externe
+
 ### Carrousel d'images
 
 Le carrousel offre plusieurs fonctionnalités :
@@ -45,16 +50,23 @@ La palette de couleurs permet d'afficher et d'organiser les couleurs de votre pr
 ![Placement des commentaires](img/placement-palette.png)
 *Options de placement des commentaires de couleurs*
 
-## Installation
-
-1. Téléchargez l'archive ZIP de l'extension
-2. Dans votre administration WordPress, allez dans Extensions > Ajouter
-3. Cliquez sur "Téléverser une extension"
-4. Sélectionnez le fichier ZIP téléchargé
-5. Cliquez sur "Installer maintenant"
-6. Activez l'extension
-
 ## Utilisation
+
+### Contrôle de la visibilité
+- Dans les réglages globaux (Portfolio > Settings), cochez ou décochez "Afficher ce portfolio par défaut" pour définir la visibilité par défaut de tous les portfolios.
+- Dans chaque projet, vous pouvez surcharger ce paramètre dans la metabox "Carrousel" avec "Afficher ce portfolio".
+
+### Ouverture plein écran via une classe CSS
+- Activez l'option "Activer l'ouverture en plein écran pour la classe open-portfolio-{ID}" (global ou local)
+- Ajoutez un élément HTML avec la classe `open-portfolio-XX` (où XX est l'ID du projet portfolio)
+- Un clic sur cet élément ouvrira le portfolio correspondant en plein écran, même s'il est masqué
+
+#### Exemple d'utilisation HTML :
+```html
+<button class="open-portfolio-123">Voir le portfolio en plein écran</button>
+```
+
+Remplacez 123 par l'ID de votre projet.
 
 ### Création d'un projet
 
@@ -91,6 +103,8 @@ Vous pouvez y configurer :
 - Couleurs par défaut
 - Positions des éléments
 - Comportement du mode plein écran
+- Afficher ce portfolio par défaut : contrôle la visibilité initiale de tous les portfolios
+- Activer l'ouverture en plein écran pour la classe open-portfolio-{ID} : permet d'ouvrir un portfolio masqué via un déclencheur externe
 
 ![Paramètres globaux et locaux](img/local-vs-global-settings-admin.png)
 *Comparaison des paramètres globaux et locaux*
@@ -101,6 +115,8 @@ Chaque projet peut avoir ses propres paramètres qui surchargent les paramètres
 - Carrousel : dimensions, couleurs, positions
 - Palette de couleurs : couleurs, commentaires
 - Style : positions, opacité
+- Afficher ce portfolio : contrôle la visibilité de ce projet uniquement
+- Activer l'ouverture en plein écran pour la classe open-portfolio-{ID} : permet d'ouvrir ce projet via un déclencheur externe
 
 ## Traductions
 

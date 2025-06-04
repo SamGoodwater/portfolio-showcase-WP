@@ -82,7 +82,9 @@ class Portfolio_Metaboxes {
             'local-carousel-color-description-fullscreen' => $global_settings['local-carousel-color-description-fullscreen'],
             'local-carousel-color-title-fullscreen' => $global_settings['local-carousel-color-title-fullscreen'],
             'local-carousel-width' => $global_settings['local-carousel-width'],
-            'local-carousel-height' => $global_settings['local-carousel-height']
+            'local-carousel-height' => $global_settings['local-carousel-height'],
+            'local-carousel-visible' => $global_settings['local-carousel-visible'],
+            'local-carousel-enable-class-fullscreen' => $global_settings['local-carousel-enable-class-fullscreen'],
         );
         
         // Merge saved settings with defaults
@@ -129,7 +131,23 @@ class Portfolio_Metaboxes {
             <div class="carousel-settings">
                 <h4><?php _e('Carousel Settings', 'portfolio-showcase'); ?></h4>
                 <p class="description"><?php _e('Configurez l\'apparence et le comportement de votre carrousel.', 'portfolio-showcase'); ?></p>
-                
+
+                <div class="settings-group">
+                    <h5><?php _e('Visibilité', 'portfolio-showcase'); ?></h5>
+                    <div class="portfolio-showcase-field">
+                        <label>
+                            <input type="checkbox" name="carousel_settings[local-carousel-visible]" <?php checked($settings['local-carousel-visible'], true); ?>>
+                            <?php _e('Afficher ce portfolio', 'portfolio-showcase'); ?>
+                        </label>
+                    </div>
+                    <div class="portfolio-showcase-field">
+                        <label>
+                            <input type="checkbox" name="carousel_settings[local-carousel-enable-class-fullscreen]" <?php checked($settings['local-carousel-enable-class-fullscreen'], true); ?>>
+                            <?php _e('Activer l\'ouverture en plein écran pour la classe', 'portfolio-showcase'); ?> <code>open-portfolio-<?php echo esc_attr($post->ID); ?></code>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="settings-group">
                     <h5><?php _e('Dimensions', 'portfolio-showcase'); ?></h5>
                     <div class="portfolio-showcase-field">
@@ -632,7 +650,9 @@ class Portfolio_Metaboxes {
             'local-carousel-color-description-fullscreen' => isset($settings['local-carousel-color-description-fullscreen']) ? sanitize_hex_color($settings['local-carousel-color-description-fullscreen']) : '#f2f7f5',
             'local-carousel-color-title-fullscreen' => isset($settings['local-carousel-color-title-fullscreen']) ? sanitize_hex_color($settings['local-carousel-color-title-fullscreen']) : '#f5f5f5',
             'local-carousel-width' => isset($settings['local-carousel-width']) ? $this->sanitize_size_value($settings['local-carousel-width']) : '100%',
-            'local-carousel-height' => isset($settings['local-carousel-height']) ? $this->sanitize_size_value($settings['local-carousel-height']) : '100%'
+            'local-carousel-height' => isset($settings['local-carousel-height']) ? $this->sanitize_size_value($settings['local-carousel-height']) : '100%',
+            'local-carousel-visible' => isset($settings['local-carousel-visible']),
+            'local-carousel-enable-class-fullscreen' => isset($settings['local-carousel-enable-class-fullscreen']),
         );
 
         return $sanitized;

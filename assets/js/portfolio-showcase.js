@@ -106,6 +106,21 @@ jQuery(document).ready(function($) {
             
             // Initialiser le carousel
             this.init();
+
+            // Ajout : ouverture fullscreen via classe open-portfolio-{ID}
+            const enableClassFullscreen = this.settings['local-carousel-enable-class-fullscreen'];
+            const portfolioId = this.settings['portfolio_id'];
+            if (enableClassFullscreen && portfolioId) {
+                const className = 'open-portfolio-' + portfolioId;
+                // Sélectionner tous les éléments avec cette classe
+                const triggers = document.querySelectorAll('.' + className);
+                triggers.forEach(trigger => {
+                    trigger.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.toggleFullscreen();
+                    });
+                });
+            }
         }
 
         /**
@@ -401,14 +416,19 @@ jQuery(document).ready(function($) {
                                    document.webkitFullscreenElement || 
                                    document.mozFullScreenElement || 
                                    document.msFullscreenElement;
-                
                 // Mettre à jour l'état du carousel
                 this.isFullscreen = !!isFullscreen && isFullscreen === this.element[0];
                 this.element.toggleClass('fullscreen', this.isFullscreen);
-                
+                // Quand on entre en plein écran, retirer le masquage
+                if (this.isFullscreen) {
+                    this.element.parent().removeClass('portfolio-hidden');
+                }
+                // Quand on quitte le plein écran, re-masquer si besoin
+                else if (!this.isFullscreen && !this.settings['local-carousel-visible']) {
+                    this.element.parent().addClass('portfolio-hidden');
+                }
                 // Mettre à jour l'interface
                 this.update();
-                
                 if (this.slides.length > 1) {
                     this.updatePrevNextPreviews();
                 }
@@ -548,11 +568,9 @@ jQuery(document).ready(function($) {
             } catch (error) {
                 // Gérer les erreurs de l'API plein écran
                 console.warn('Fullscreen operation failed:', error);
-                
                 // Forcer la mise à jour de l'état si l'API échoue
                 this.isFullscreen = !this.isFullscreen;
                 this.element.toggleClass('fullscreen', this.isFullscreen);
-                
                 // Mettre à jour l'interface
                 if (this.slides.length > 1) {
                     this.updatePrevNextPreviews();
