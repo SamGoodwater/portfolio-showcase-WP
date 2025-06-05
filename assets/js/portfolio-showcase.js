@@ -145,6 +145,7 @@ jQuery(document).ready(function($) {
             this.setupFullscreen();
             this.setupKeyboardNavigation();
             this.setupClickHandlers();
+            this.setupTouchEvents();
             
             this.update();
             this.updateSize();        
@@ -620,6 +621,38 @@ jQuery(document).ready(function($) {
             
             applyStyle(this.element, null, 'width', width);
             applyStyle(this.element, null, 'height', height);
+        }
+
+        /**
+         * Ajoute la gestion du swipe tactile pour le carousel
+         */
+        setupTouchEvents() {
+            let startX = 0;
+            let startY = 0;
+            let isMoving = false;
+
+            this.element.on('touchstart' + this.namespace, (e) => {
+                if (e.originalEvent.touches.length === 1) {
+                    startX = e.originalEvent.touches[0].clientX;
+                    startY = e.originalEvent.touches[0].clientY;
+                    isMoving = true;
+                }
+            });
+
+            this.element.on('touchend' + this.namespace, (e) => {
+                if (!isMoving) return;
+                const touch = e.originalEvent.changedTouches[0];
+                const dx = touch.clientX - startX;
+                const dy = touch.clientY - startY;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                    if (dx > 0) {
+                        this.prevSlide();
+                    } else {
+                        this.nextSlide();
+                    }
+                }
+                isMoving = false;
+            });
         }
     }
 

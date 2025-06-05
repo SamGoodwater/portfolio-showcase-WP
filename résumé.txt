@@ -77,6 +77,10 @@ Remplacez 123 par l'ID du projet souhaité.
 - Compatible avec WordPress 6.0+ et PHP 7.4+
 - Support multilingue avec fichiers de traduction
 
+### 7. Support tactile (mobile/tablette)
+- Le carousel supporte le swipe tactile (glissement du doigt) pour naviguer entre les slides sur mobile et tablette.
+- Fonctionne nativement, aucune configuration supplémentaire nécessaire.
+
 ## Fonctionnement technique
 
 1. **Backend** : 

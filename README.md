@@ -17,6 +17,10 @@ Cette version est fonctionnelle mais n'a pas été testée sur un large éventai
 
 ## Fonctionnalités
 
+### Support tactile (mobile/tablette)
+- Le carousel supporte le swipe tactile : faites glisser le doigt vers la gauche ou la droite pour naviguer entre les images sur mobile ou tablette.
+- Fonctionne nativement, aucune configuration supplémentaire nécessaire.
+
 ### Contrôle de la visibilité et ouverture plein écran par classe
 - Vous pouvez choisir d'afficher ou non chaque portfolio (option globale ou locale)
 - Vous pouvez activer l'ouverture du portfolio en plein écran via une classe CSS spécifique (option globale ou locale)
@@ -51,6 +55,10 @@ La palette de couleurs permet d'afficher et d'organiser les couleurs de votre pr
 *Options de placement des commentaires de couleurs*
 
 ## Utilisation
+
+### Expérience mobile
+- Sur mobile et tablette, vous pouvez faire défiler le carousel en glissant simplement le doigt (swipe gauche/droite).
+- Cette navigation tactile fonctionne automatiquement sur tous les carousels du plugin.
 
 ### Contrôle de la visibilité
 - Dans les réglages globaux (Portfolio > Settings), cochez ou décochez "Afficher ce portfolio par défaut" pour définir la visibilité par défaut de tous les portfolios.

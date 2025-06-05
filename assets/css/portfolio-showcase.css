@@ -579,7 +579,7 @@
     }
     
     .carousel-preview-image {
-        width: 60px;
+        visibility: hidden;
     }
 
     .portfolio-carousel.fullscreen .carousel-preview-image {
@@ -611,7 +611,7 @@
     }
     
     .carousel-preview-image {
-        width: 40px;
+        visibility: hidden;
     }
     .portfolio-color-palette {
         flex-wrap: wrap;
