@@ -137,18 +137,8 @@ jQuery(document).ready(function($) {
             
             if (this.slides.length > 1) {
                 this.setupPreviews();
-                // Attendre que les images principales soient chargées avant de créer les thumbnails
-                this.waitForImagesToLoad().then(() => {
-                    this.setupThumbnails();
-                }).catch(() => {
-                    // Si le chargement échoue, créer les thumbnails quand même
-                    console.warn('Some images failed to load, creating thumbnails anyway');
-                    this.setupThumbnails();
-                });
-                this.setupNavigationArrows();
-            } else {
-                // Si une seule image, créer les thumbnails immédiatement
                 this.setupThumbnails();
+                this.setupNavigationArrows();
             }
             
             this.showSlide(0);
@@ -159,43 +149,6 @@ jQuery(document).ready(function($) {
             
             this.update();
             this.updateSize();        
-        }
-
-        /**
-         * Attend que toutes les images principales soient chargées
-         * @returns {Promise} Promise qui se résout quand toutes les images sont chargées
-         */
-        waitForImagesToLoad() {
-            const imagePromises = [];
-            
-            this.slides.each((index, slide) => {
-                const img = $(slide).find('img');
-                if (img.length) {
-                    const promise = new Promise((resolve, reject) => {
-                        const imgElement = img[0];
-                        
-                        // Si l'image est déjà chargée
-                        if (imgElement.complete && imgElement.naturalHeight !== 0) {
-                            resolve();
-                            return;
-                        }
-                        
-                        // Attendre le chargement
-                        img.on('load', resolve);
-                        img.on('error', reject);
-                        
-                        // Timeout de sécurité (5 secondes)
-                        setTimeout(() => {
-                            console.warn(`Image ${index} load timeout`);
-                            resolve(); // Résoudre quand même pour ne pas bloquer
-                        }, 5000);
-                    });
-                    
-                    imagePromises.push(promise);
-                }
-            });
-            
-            return Promise.all(imagePromises);
         }
 
         /**
@@ -429,41 +382,13 @@ jQuery(document).ready(function($) {
                         .attr('data-index', index)
                         .attr('aria-label', `Go to slide ${index + 1}`);
                         
-                    // Créer l'image miniature avec gestion d'erreur
-                    const thumbImg = $('<img>');
-                    const imgSrc = img.attr('src');
-                    
-                    // Vérifier que la source existe
-                    if (!imgSrc) {
-                        console.warn(`No src found for slide ${index}`);
-                        return;
-                    }
-                    
-                    // Débogage : afficher la source de l'image
-                    console.log(`Thumbnail ${index}: ${imgSrc.substring(0, 50)}...`);
-                    
-                    thumbImg
-                        .attr('src', imgSrc)
+                    // Créer l'image miniature
+                    const thumbImg = $('<img>')
+                        .attr('src', img.attr('src'))
                         .attr('alt', img.attr('alt') || `Thumbnail ${index + 1}`);
-                    
-                    // Ajouter un gestionnaire d'erreur pour détecter les problèmes
-                    thumbImg.on('error', function() {
-                        console.error(`Failed to load thumbnail ${index}:`, imgSrc);
-                        // Essayer de recharger l'image après un délai
-                        setTimeout(() => {
-                            $(this).attr('src', imgSrc + '?t=' + Date.now());
-                        }, 1000);
-                    });
-                    
-                    // Ajouter un gestionnaire de succès pour confirmer le chargement
-                    thumbImg.on('load', function() {
-                        console.log(`Thumbnail ${index} loaded successfully`);
-                    });
                     
                     thumbnail.append(thumbImg);
                     this.thumbnailsContainer.append(thumbnail);
-                } else {
-                    console.warn(`No image found in slide ${index}`);
                 }
             });
             
@@ -621,8 +546,18 @@ jQuery(document).ready(function($) {
          */
         async toggleFullscreen() {
             try {
+                // Détection iOS (iPhone/iPad)
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
                 if (!this.isFullscreen) {
-                    // Entrer en mode plein écran
+                    if (isIOS) {
+                        // Fallback CSS fullscreen pour iOS
+                        this.element.parent().removeClass('portfolio-hidden');
+                        this.element.addClass('fullscreen');
+                        this.isFullscreen = true;
+                        this.update();
+                        return;
+                    }
+                    // Sinon, API standard
                     const elem = this.element[0];
                     if (elem.requestFullscreen) {
                         await elem.requestFullscreen();
@@ -632,7 +567,16 @@ jQuery(document).ready(function($) {
                         await elem.msRequestFullscreen();
                     }
                 } else {
-                    // Quitter le mode plein écran
+                    if (isIOS) {
+                        this.element.removeClass('fullscreen');
+                        this.isFullscreen = false;
+                        if (!this.settings['local-carousel-visible']) {
+                            this.element.parent().addClass('portfolio-hidden');
+                        }
+                        this.update();
+                        return;
+                    }
+                    // Sortie du plein écran standard
                     if (document.exitFullscreen) {
                         await document.exitFullscreen();
                     } else if (document.webkitExitFullscreen) {

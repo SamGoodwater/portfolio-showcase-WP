@@ -1,7 +1,7 @@
 # Configuration
 $ExtensionName = "portfolio-showcase"
 $ZipFile = "$ExtensionName.zip"
-$ExcludeFiles = @("*.psd", "*.git*", "*.bat", "create-extension.bat", ".gitattributes", ".gitignore", "résumé.txt")
+$ExcludeFiles = @("*.psd", "*.git*", "create-extension.bat", ".gitattributes", ".gitignore", "résumé.txt", "*.zip", "*.ps1", "*.md")
 
 # Supprimer l'ancien fichier ZIP s'il existe
 if (Test-Path $ZipFile) {
