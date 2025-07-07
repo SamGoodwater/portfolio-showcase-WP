@@ -546,8 +546,18 @@ jQuery(document).ready(function($) {
          */
         async toggleFullscreen() {
             try {
+                // Détection iOS (iPhone/iPad)
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
                 if (!this.isFullscreen) {
-                    // Entrer en mode plein écran
+                    if (isIOS) {
+                        // Fallback CSS fullscreen pour iOS
+                        this.element.parent().removeClass('portfolio-hidden');
+                        this.element.addClass('fullscreen');
+                        this.isFullscreen = true;
+                        this.update();
+                        return;
+                    }
+                    // Sinon, API standard
                     const elem = this.element[0];
                     if (elem.requestFullscreen) {
                         await elem.requestFullscreen();
@@ -557,7 +567,16 @@ jQuery(document).ready(function($) {
                         await elem.msRequestFullscreen();
                     }
                 } else {
-                    // Quitter le mode plein écran
+                    if (isIOS) {
+                        this.element.removeClass('fullscreen');
+                        this.isFullscreen = false;
+                        if (!this.settings['local-carousel-visible']) {
+                            this.element.parent().addClass('portfolio-hidden');
+                        }
+                        this.update();
+                        return;
+                    }
+                    // Sortie du plein écran standard
                     if (document.exitFullscreen) {
                         await document.exitFullscreen();
                     } else if (document.webkitExitFullscreen) {
